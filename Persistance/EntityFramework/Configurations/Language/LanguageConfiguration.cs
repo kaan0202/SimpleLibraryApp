@@ -14,6 +14,7 @@ namespace Persistance.EntityFramework.Configurations.Language
         {
             builder.ToTable("Languages");
             builder.HasKey(x => x.Id);
+            builder.Property(x => x.Name).IsRequired().HasMaxLength(20);
 
             builder.HasOne(x => x.Catalog).WithOne(x => x.Language).HasForeignKey<Domain.Entities.Language>(x => x.CatalogId);
         }

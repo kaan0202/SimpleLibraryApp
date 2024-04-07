@@ -14,6 +14,16 @@ namespace Persistance.EntityFramework.Configurations.Employee
         {
             builder.ToTable("Employees");
             builder.HasKey(e => e.Id);
+
+            builder.Property(x => x.Salary).IsRequired();
+            builder.Property(x => x.Surname).IsRequired();
+            builder.Property(x => x.Name).IsRequired();
+
+
+
+
+
+
         }
     }
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Persistance.EntityFramework.Repositories.Author
 {
-    public class AuthorReadRepository : ReadRepository<Domain.Entities.Author>
+    public class AuthorReadRepository : ReadRepository<Domain.Entities.Author>,IAuthorReadRepository
     {
         public AuthorReadRepository(LibraryDbContext context) : base(context)
         {

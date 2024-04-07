@@ -14,6 +14,7 @@ namespace Persistance.EntityFramework.Configurations.Catalog
         {
             builder.ToTable("Catalogs");
             builder.HasKey(x => x.Id);
+            builder.Property(x => x.CatalogName).IsRequired();
         }
     }
 }

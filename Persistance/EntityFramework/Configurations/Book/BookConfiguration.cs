@@ -14,6 +14,10 @@ namespace Persistance.EntityFramework.Configurations.Book
         {
             builder.ToTable("Books");
            builder.HasKey(x => x.Id);
+            builder.Property(x => x.Name).IsRequired();
+            builder.Property(x => x.PageOfNumber).IsRequired();
+          
+
 
             builder.HasOne(x => x.Author)
                 .WithMany(x => x.Books)

@@ -13,6 +13,9 @@ namespace Persistance.EntityFramework.Configurations.Address
         {
             builder.ToTable("Addresses");
             builder.HasKey(x => x.Id);
+            builder.Property(x => x.AddressTitle).IsRequired();
+            builder.Property(x => x.PhoneNumber).IsRequired();
+            builder.Property(x => x.Description).IsRequired();
 
             builder.HasOne(x => x.Person)
              .WithOne(x => x.Address)
