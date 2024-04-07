@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Address.Queries.GetSingle
 {
-    public class Validator:AbstractValidator<GetSingleAddressQueryRequest>
+    public class ValidatorSettings:AbstractValidator<GetSingleAddressQueryRequest>
     {
-        public Validator()
+        public ValidatorSettings()
         {
             RuleFor(x => x.Id)
                 .NotEmpty()
