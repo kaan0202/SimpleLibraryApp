@@ -1,5 +1,7 @@
 ﻿using Application.DTOs.CatalogDto;
 using Application.Repositories.Catalog;
+using Domain.Results;
+using Domain.Results.Common;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,14 +12,14 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Catalog.Queries.GetAll
 {
-    public class GetAllCatalogQueryHandler : IRequestHandler<GetAllCatalogQueryRequest, GetAllCatalogQueryResponse>
+    public class GetAllCatalogQueryHandler : IRequestHandler<GetAllCatalogQueryRequest, BaseDataResponse<List<QueryCatalogDto>>>
     {
         readonly ICatalogReadRepository _readRepository;
         public GetAllCatalogQueryHandler(ICatalogReadRepository catalogReadRepository)
         {
             _readRepository = catalogReadRepository;
         }
-        async Task<GetAllCatalogQueryResponse> IRequestHandler<GetAllCatalogQueryRequest, GetAllCatalogQueryResponse>.Handle(GetAllCatalogQueryRequest request, CancellationToken cancellationToken)
+        public async Task<BaseDataResponse<List<QueryCatalogDto>>> Handle(GetAllCatalogQueryRequest request, CancellationToken cancellationToken)
         {
             var catalogs = await  _readRepository.GetAll(false).ToListAsync();
             List<QueryCatalogDto> queryCatalogDtos = new();
@@ -28,10 +30,8 @@ namespace Application.Features.Catalog.Queries.GetAll
                 queryCatalogDto.Id = catalog.Id;
                 queryCatalogDtos.Add(queryCatalogDto);
             }
-            return new()
-            {
-                CatalogDtos = queryCatalogDtos
-            };
+            return new SuccessDataResponse<List<QueryCatalogDto>>(queryCatalogDtos);
+            
         }
     }
 }

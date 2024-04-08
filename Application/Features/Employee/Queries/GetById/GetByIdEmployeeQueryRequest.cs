@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using Application.DTOs.EmployeeDto;
+using Domain.Results.Common;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Employee.Queries.GetById
 {
-    public class GetByIdEmployeeQueryRequest:IRequest<GetByIdEmployeeQueryResponse>
+    public class GetByIdEmployeeQueryRequest:IRequest<BaseDataResponse<QueryEmployeeDto>>
     {
         public int Id { get; set; }
     }

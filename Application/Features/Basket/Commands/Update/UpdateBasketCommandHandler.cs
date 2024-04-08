@@ -1,4 +1,6 @@
 ﻿using Application.Repositories.Basket;
+using Domain.Results;
+using Domain.Results.Common;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Basket.Commands.Update
 {
-    public class UpdateBasketCommandHandler : IRequestHandler<UpdateBasketCommandRequest, UpdateBasketCommandResponse>
+    public class UpdateBasketCommandHandler : IRequestHandler<UpdateBasketCommandRequest, BaseResponse>
     { 
         readonly IBasketWriteRepository _basketWriteRepository;
         readonly IBasketReadRepository _basketReadRepository;
@@ -19,13 +21,13 @@ namespace Application.Features.Basket.Commands.Update
             _basketReadRepository = basketReadRepository;
         }
 
-        async Task<UpdateBasketCommandResponse> IRequestHandler<UpdateBasketCommandRequest, UpdateBasketCommandResponse>.Handle(UpdateBasketCommandRequest request, CancellationToken cancellationToken)
+        public async Task<BaseResponse> Handle(UpdateBasketCommandRequest request, CancellationToken cancellationToken)
         {
             bool result = await _basketReadRepository.AnyAsync(data => data.Id == request.Basket.Id);
             if (result)
             {
                 _basketWriteRepository.Update(request.Basket);
-                return new();
+                return new SuccessWithNoDataResponse("Sepet Güncellendi");
             }
             throw new Exception("Hata");
            

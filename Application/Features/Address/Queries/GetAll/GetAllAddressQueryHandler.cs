@@ -1,5 +1,7 @@
 ﻿using Application.DTOs.AddressDto;
 using Application.Repositories.Address;
+using Domain.Results;
+using Domain.Results.Common;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,14 +12,14 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Address.Queries.GetAll
 {
-    public class GetAllAddressQueryHandler : IRequestHandler<GetAllAddressQueryRequest, GetAllAddressQueryResponse>
+    public class GetAllAddressQueryHandler : IRequestHandler<GetAllAddressQueryRequest, BaseDataResponse<List<QueryAddressDto>>>
     {
         readonly IAddressReadRepository _addressReadRepository;
         public GetAllAddressQueryHandler(IAddressReadRepository addressReadRepository)
         {
             _addressReadRepository = addressReadRepository;
         }
-        async Task<GetAllAddressQueryResponse> IRequestHandler<GetAllAddressQueryRequest, GetAllAddressQueryResponse>.Handle(GetAllAddressQueryRequest request, CancellationToken cancellationToken)
+        public async Task<BaseDataResponse<List<QueryAddressDto>>> Handle(GetAllAddressQueryRequest request, CancellationToken cancellationToken)
         {
 
             var addresses = await _addressReadRepository.Table.Include(x => x.Person).Include(x => x.NeighboorHood).AsNoTrackingWithIdentityResolution().ToListAsync();
@@ -49,10 +51,9 @@ namespace Application.Features.Address.Queries.GetAll
 
                 addressDtos.Add(addressDto);
             }
-            return new()
-            {
-                AddressDto = addressDtos
-            };
+            return new SuccessDataResponse<List<QueryAddressDto>>(addressDtos);
         }
+
+        
     }
 }

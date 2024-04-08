@@ -1,5 +1,7 @@
 ﻿using Application.DTOs.AuthorDto;
 using Application.Repositories.Author;
+using Domain.Results;
+using Domain.Results.Common;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,14 +12,14 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Author.Queries.GetAll
 {
-    public class GetAllAuthorQueryHandler : IRequestHandler<GetAllAuthorQueryRequest, GetAllAuthorQueryResponse>
+    public class GetAllAuthorQueryHandler : IRequestHandler<GetAllAuthorQueryRequest, BaseDataResponse<List<QueryAuthorDto>>>
     {
         readonly IAuthorReadRepository _authorReadRepository;
         public GetAllAuthorQueryHandler(IAuthorReadRepository authorReadRepository)
         {
             _authorReadRepository = authorReadRepository;
         }
-        async Task<GetAllAuthorQueryResponse> IRequestHandler<GetAllAuthorQueryRequest, GetAllAuthorQueryResponse>.Handle(GetAllAuthorQueryRequest request, CancellationToken cancellationToken)
+       public async Task<BaseDataResponse<List<QueryAuthorDto>>> Handle(GetAllAuthorQueryRequest request, CancellationToken cancellationToken)
         {
             bool result = await _authorReadRepository.AnyAsync(data => data.Id == request.Id,false);
             if (result) 
@@ -37,10 +39,7 @@ namespace Application.Features.Author.Queries.GetAll
                     
                     authorDtos.Add(authorDto);
                 }
-                return new()
-                {
-                    AuthorDto = authorDtos
-                };
+                return new SuccessDataResponse<List<QueryAuthorDto>>(authorDtos);
             }
             throw new Exception("Hata");
         }

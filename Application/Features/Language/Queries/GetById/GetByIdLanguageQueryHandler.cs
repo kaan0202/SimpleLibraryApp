@@ -1,5 +1,7 @@
 ﻿using Application.DTOs.LanguageDto;
 using Application.Repositories.Language;
+using Domain.Results;
+using Domain.Results.Common;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -9,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Language.Queries.GetById
 {
-    public class GetByIdLanguageQueryHandler : IRequestHandler<GetByIdLanguageQueryRequest, GetByIdLanguageQueryResponse>
+    public class GetByIdLanguageQueryHandler : IRequestHandler<GetByIdLanguageQueryRequest, BaseDataResponse<QueryLanguageDto>>
     {
         readonly ILanguageReadRepository _languageReadRepository;
 
@@ -18,7 +20,7 @@ namespace Application.Features.Language.Queries.GetById
             _languageReadRepository = languageReadRepository;
         }
 
-        async Task<GetByIdLanguageQueryResponse> IRequestHandler<GetByIdLanguageQueryRequest, GetByIdLanguageQueryResponse>.Handle(GetByIdLanguageQueryRequest request, CancellationToken cancellationToken)
+        public async Task<BaseDataResponse<QueryLanguageDto>> Handle(GetByIdLanguageQueryRequest request, CancellationToken cancellationToken)
         {
             bool result = await _languageReadRepository.AnyAsync(data => data.Id == request.Id,false);
             if (result) 
@@ -28,10 +30,8 @@ namespace Application.Features.Language.Queries.GetById
                 languageDto.Id = request.Id;
                 languageDto.Name=language.Name;
 
-                return new()
-                {
-                    LanguageDto = languageDto
-                };
+                return new SuccessDataResponse<QueryLanguageDto>(languageDto);
+               
             }
             throw new Exception("Hata");
         }

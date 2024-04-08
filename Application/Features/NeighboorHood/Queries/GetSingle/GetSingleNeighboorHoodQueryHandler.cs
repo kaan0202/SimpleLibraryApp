@@ -1,5 +1,7 @@
 ﻿using Application.DTOs.NeighboorHoodDto;
 using Application.Repositories.NeighboorHood;
+using Domain.Results;
+using Domain.Results.Common;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -9,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.NeighboorHood.Queries.GetSingle
 {
-    public class GetSingleNeighboorHoodQueryHandler : IRequestHandler<GetSingleNeighboorHoodQueryRequest, GetSingleNeighboorHoodQueryResponse>
+    public class GetSingleNeighboorHoodQueryHandler : IRequestHandler<GetSingleNeighboorHoodQueryRequest, BaseDataResponse<QueryNeighboorHoodDto>>
     {
         readonly INeighboorHoodReadRepository _repository;
 
@@ -18,17 +20,14 @@ namespace Application.Features.NeighboorHood.Queries.GetSingle
             _repository = repository;
         }
 
-        public async Task<GetSingleNeighboorHoodQueryResponse> Handle(GetSingleNeighboorHoodQueryRequest request, CancellationToken cancellationToken)
+        public async Task<BaseDataResponse<QueryNeighboorHoodDto>> Handle(GetSingleNeighboorHoodQueryRequest request, CancellationToken cancellationToken)
         {
             bool result = await _repository.AnyAsync(data => data.Id == request.Id,false);
             if (result)
             {
                 var neighboorHood = await _repository.GetSingleAsync(data => data.Id == request.Id,false);
                 QueryNeighboorHoodDto queryNeighboorHoodDto = new();
-                return new()
-                {
-                    NeighboorHoodDto = queryNeighboorHoodDto
-                };
+                return new SuccessDataResponse<QueryNeighboorHoodDto>(queryNeighboorHoodDto);
             }
             throw new Exception("Hata");
         }

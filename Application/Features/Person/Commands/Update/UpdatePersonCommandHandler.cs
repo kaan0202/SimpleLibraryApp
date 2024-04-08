@@ -1,4 +1,6 @@
 ﻿using Application.Repositories.Person;
+using Domain.Results;
+using Domain.Results.Common;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Person.Commands.Update
 {
-    public class UpdatePersonCommandHandler : IRequestHandler<UpdatePersonCommandRequest, UpdatePersonCommandResponse>
+    public class UpdatePersonCommandHandler : IRequestHandler<UpdatePersonCommandRequest, BaseResponse>
     {
         readonly IPersonReadRepository _personReadRepository;
         readonly IPersonWriteRepository _personWriteRepository;
@@ -17,13 +19,13 @@ namespace Application.Features.Person.Commands.Update
             _personReadRepository = personReadRepository;
             _personWriteRepository = personWriteRepository;
         }
-        async Task<UpdatePersonCommandResponse> IRequestHandler<UpdatePersonCommandRequest, UpdatePersonCommandResponse>.Handle(UpdatePersonCommandRequest request, CancellationToken cancellationToken)
+       public async Task<BaseResponse> Handle(UpdatePersonCommandRequest request, CancellationToken cancellationToken)
         {
             bool result = await _personReadRepository.AnyAsync(data => data.Id == request.Person.Id, false);
             if (result)
             {
                 _personWriteRepository.Update(request.Person);
-                return new();
+                return new SuccessWithNoDataResponse("Kullanıcı Güncellendi");
             }
             throw new Exception("Hata");
         }

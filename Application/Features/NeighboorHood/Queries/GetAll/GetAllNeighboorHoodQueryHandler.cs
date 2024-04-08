@@ -1,5 +1,7 @@
 ﻿using Application.DTOs.NeighboorHoodDto;
 using Application.Repositories.NeighboorHood;
+using Domain.Results;
+using Domain.Results.Common;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.NeighboorHood.Queries.GetAll
 {
-    public class GetAllNeighboorHoodQueryHandler : IRequestHandler<GetAllNeighboorHoodQueryRequest, GetAllNeighboorHoodQueryResponse>
+    public class GetAllNeighboorHoodQueryHandler : IRequestHandler<GetAllNeighboorHoodQueryRequest, BaseDataResponse<List<QueryNeighboorHoodDto>>>
     {
         readonly INeighboorHoodReadRepository _repository;
 
@@ -19,7 +21,7 @@ namespace Application.Features.NeighboorHood.Queries.GetAll
             _repository = repository;
         }
 
-        async Task<GetAllNeighboorHoodQueryResponse> IRequestHandler<GetAllNeighboorHoodQueryRequest, GetAllNeighboorHoodQueryResponse>.Handle(GetAllNeighboorHoodQueryRequest request, CancellationToken cancellationToken)
+      public  async Task<BaseDataResponse<List<QueryNeighboorHoodDto>>> Handle(GetAllNeighboorHoodQueryRequest request, CancellationToken cancellationToken)
         {
             var neighboorHoods = await _repository.GetAll().ToListAsync();
             List<QueryNeighboorHoodDto> queryNeighboorHoodDtos = new();
@@ -30,10 +32,8 @@ namespace Application.Features.NeighboorHood.Queries.GetAll
                 queryNeighboorHoodDto.Name = item.Name;
                 queryNeighboorHoodDtos.Add(queryNeighboorHoodDto);
             }
-            return new()
-            {
-                NeighboorHoodDtos = queryNeighboorHoodDtos
-            };
+            return new SuccessDataResponse<List<QueryNeighboorHoodDto>>(queryNeighboorHoodDtos);
+            
         }
     }
 }

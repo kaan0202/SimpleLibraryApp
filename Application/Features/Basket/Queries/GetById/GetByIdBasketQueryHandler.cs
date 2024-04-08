@@ -1,5 +1,7 @@
 ﻿
 using Application.Repositories.Basket;
+using Domain.Results;
+using Domain.Results.Common;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -9,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Basket.Queries.GetById
 {
-    public class GetByIdBasketQueryHandler : IRequestHandler<GetByIdBasketQueryRequest, GetByIdBasketQueryResponse>
+    public class GetByIdBasketQueryHandler : IRequestHandler<GetByIdBasketQueryRequest, BaseDataResponse<Domain.Entities.Basket>>
     {
         readonly IBasketReadRepository _repository;
 
@@ -18,16 +20,13 @@ namespace Application.Features.Basket.Queries.GetById
             _repository = repository;
         }
 
-        async Task<GetByIdBasketQueryResponse> IRequestHandler<GetByIdBasketQueryRequest, GetByIdBasketQueryResponse>.Handle(GetByIdBasketQueryRequest request, CancellationToken cancellationToken)
+        public async Task<BaseDataResponse<Domain.Entities.Basket>> Handle(GetByIdBasketQueryRequest request, CancellationToken cancellationToken)
         {
             bool result = await _repository.AnyAsync(data => data.Id == request.Id && data.PersonId == request.PersonId,false);
             if (result)
             {
                 var basket = await _repository.GetByIdAsync(request.Id);
-                return new()
-                {
-                    Basket = basket
-                };
+                return new SuccessDataResponse<Domain.Entities.Basket>(basket);
 
             }
             throw new Exception("Hata");

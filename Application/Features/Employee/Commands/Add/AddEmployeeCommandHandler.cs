@@ -1,4 +1,6 @@
 ﻿using Application.Repositories.Employee;
+using Domain.Results;
+using Domain.Results.Common;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,17 +10,17 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Employee.Commands.Add
 {
-    public class AddEmployeeCommandHandler : IRequestHandler<AddEmployeeCommandRequest, AddEmployeeCommandResponse>
+    public class AddEmployeeCommandHandler : IRequestHandler<AddEmployeeCommandRequest, BaseResponse>
     {
         readonly IEmployeeWriteRepository _employeeWriteRepository;
         public AddEmployeeCommandHandler(IEmployeeWriteRepository employeeWriteRepository)
         {
             _employeeWriteRepository = employeeWriteRepository;
         }
-        async Task<AddEmployeeCommandResponse> IRequestHandler<AddEmployeeCommandRequest, AddEmployeeCommandResponse>.Handle(AddEmployeeCommandRequest request, CancellationToken cancellationToken)
+        public async Task<BaseResponse> Handle(AddEmployeeCommandRequest request, CancellationToken cancellationToken)
         {
             await _employeeWriteRepository.AddAsync(request.Employee);
-            return new();
+            return new SuccessWithNoDataResponse("Çalışan Eklendi");
         }
     }
 }

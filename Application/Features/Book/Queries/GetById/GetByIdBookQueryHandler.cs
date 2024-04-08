@@ -1,5 +1,7 @@
 ﻿using Application.DTOs.BookDto;
 using Application.Repositories.Book;
+using Domain.Results;
+using Domain.Results.Common;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -9,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Book.Queries.GetById
 {
-    public class GetByIdBookQueryHandler : IRequestHandler<GetByIdBookQueryRequest, GetByIdBookQueryResponse>
+    public class GetByIdBookQueryHandler : IRequestHandler<GetByIdBookQueryRequest, BaseDataResponse<QueryBookDto>>
     {
         readonly IBookReadRepository _bookReadRepository;
 
@@ -18,7 +20,7 @@ namespace Application.Features.Book.Queries.GetById
             _bookReadRepository = bookReadRepository;
         }
 
-        async Task<GetByIdBookQueryResponse> IRequestHandler<GetByIdBookQueryRequest, GetByIdBookQueryResponse>.Handle(GetByIdBookQueryRequest request, CancellationToken cancellationToken)
+       public async Task<BaseDataResponse<QueryBookDto>> Handle(GetByIdBookQueryRequest request, CancellationToken cancellationToken)
         {
             bool result = await _bookReadRepository.AnyAsync(data => data.Id == request.Id,false);
             if (result)
@@ -42,10 +44,7 @@ namespace Application.Features.Book.Queries.GetById
                 };
                 
 
-                return new()
-                {
-                    BookDto = queryBookDto
-                };
+               return new SuccessDataResponse<QueryBookDto>(queryBookDto);
             }
             throw new Exception("Hata");
         }

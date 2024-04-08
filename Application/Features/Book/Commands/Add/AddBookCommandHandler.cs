@@ -1,4 +1,6 @@
 ﻿using Application.Repositories.Book;
+using Domain.Results;
+using Domain.Results.Common;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,14 +10,14 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Book.Commands.Add
 {
-    public class AddBookCommandHandler : IRequestHandler<AddBookCommandRequest, AddBookCommandResponse>
+    public class AddBookCommandHandler : IRequestHandler<AddBookCommandRequest, BaseResponse>
     {
         readonly IBookWriteRepository _bookWriteRepository;
-        async Task<AddBookCommandResponse> IRequestHandler<AddBookCommandRequest, AddBookCommandResponse>.Handle(AddBookCommandRequest request, CancellationToken cancellationToken)
+        public async Task<BaseResponse> Handle(AddBookCommandRequest request, CancellationToken cancellationToken)
         {
 
             await _bookWriteRepository.AddAsync(request.Book);
-            return new();
+            return new SuccessWithNoDataResponse("Kitap Eklendi");
         }
     }
 }

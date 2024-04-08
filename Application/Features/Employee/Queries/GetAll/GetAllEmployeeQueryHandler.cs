@@ -1,6 +1,8 @@
 ﻿using Application.DTOs.EmployeeDto;
 using Application.Features.Address.Queries.GetAll;
 using Application.Repositories.Employee;
+using Domain.Results;
+using Domain.Results.Common;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -11,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Employee.Queries.GetAll
 {
-    public class GetAllEmployeeQueryHandler : IRequestHandler<GetAllEmployeeQueryRequest, GetAllEmployeeQueryResponse>
+    public class GetAllEmployeeQueryHandler : IRequestHandler<GetAllEmployeeQueryRequest, BaseDataResponse<List<QueryEmployeeDto>>>
     {
         readonly IEmployeeReadRepository _employeeReadRepository;
 
@@ -20,7 +22,7 @@ namespace Application.Features.Employee.Queries.GetAll
             _employeeReadRepository = employeeReadRepository;
         }
 
-        public async Task<GetAllEmployeeQueryResponse> Handle(GetAllEmployeeQueryRequest request, CancellationToken cancellationToken)
+        public async Task<BaseDataResponse<List<QueryEmployeeDto>>> Handle(GetAllEmployeeQueryRequest request, CancellationToken cancellationToken)
         {
             var employees = await _employeeReadRepository.GetAll(false).ToListAsync();
             List<QueryEmployeeDto> queryEmployeeDtos = new();
@@ -35,10 +37,8 @@ namespace Application.Features.Employee.Queries.GetAll
                 queryEmployeeDto.Id = employee.Id;
                 queryEmployeeDtos.Add(queryEmployeeDto);
             }
-            return new()
-            {
-                EmployeeDtos = queryEmployeeDtos
-            };
+            return new SuccessDataResponse<List<QueryEmployeeDto>>(queryEmployeeDtos);
+           
         }
         
     }

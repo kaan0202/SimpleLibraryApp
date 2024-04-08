@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Domain.Results.Common;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Author.Commands.Add
 {
-    public class AddAuthorCommandRequest:IRequest<AddAuthorCommandResponse>
+    public class AddAuthorCommandRequest:IRequest<BaseResponse>
     {
         public Domain.Entities.Author Author { get; set; }
     }

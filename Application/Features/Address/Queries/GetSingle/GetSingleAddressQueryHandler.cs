@@ -1,6 +1,8 @@
 ﻿using Application.DTOs.AddressDto;
 using Application.Features.Address.Queries.GetById;
 using Application.Repositories.Address;
+using Domain.Results;
+using Domain.Results.Common;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -10,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Address.Queries.GetSingle
 {
-    public class GetSingleAddressQueryHandler : IRequestHandler<GetSingleAddressQueryRequest, GetSingleAddressQueryResponse>
+    public class GetSingleAddressQueryHandler : IRequestHandler<GetSingleAddressQueryRequest, BaseDataResponse<QueryAddressDto>>
     {
         readonly IAddressReadRepository _addressReadRepository;
 
@@ -19,7 +21,7 @@ namespace Application.Features.Address.Queries.GetSingle
             _addressReadRepository = addressReadRepository;
         }
 
-        async Task<GetSingleAddressQueryResponse> IRequestHandler<GetSingleAddressQueryRequest, GetSingleAddressQueryResponse>.Handle(GetSingleAddressQueryRequest request, CancellationToken cancellationToken)
+        public async Task<BaseDataResponse<QueryAddressDto>> Handle(GetSingleAddressQueryRequest request, CancellationToken cancellationToken)
         {
             bool result = await _addressReadRepository.AnyAsync(data => data.Id == request.Id, false);
             if (result)
@@ -44,13 +46,14 @@ namespace Application.Features.Address.Queries.GetSingle
                     
                     Name = address.NeighboorHood.Name,
                 };
-                return new()
-                {
-                    AddressDto = queryAddressDto
-                };
+                return new SuccessDataResponse<QueryAddressDto>(queryAddressDto);
             }
             throw new Exception("Hata");
 
         }
+
+       
+        }
     }
-}
+
+

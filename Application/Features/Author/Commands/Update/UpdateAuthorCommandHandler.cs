@@ -1,4 +1,6 @@
 ﻿using Application.Repositories.Author;
+using Domain.Results;
+using Domain.Results.Common;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Author.Commands.Update
 {
-    public class UpdateAuthorCommandHandler : IRequestHandler<UpdateAuthorCommandRequest, UpdateAuthorCommandResponse>
+    public class UpdateAuthorCommandHandler : IRequestHandler<UpdateAuthorCommandRequest, BaseResponse>
     { 
         readonly IAuthorWriteRepository _authorWriteRepository;
         readonly IAuthorReadRepository _authorReadRepository;
@@ -19,13 +21,13 @@ namespace Application.Features.Author.Commands.Update
             _authorWriteRepository = authorWriteRepository;
         }
 
-        async Task<UpdateAuthorCommandResponse> IRequestHandler<UpdateAuthorCommandRequest, UpdateAuthorCommandResponse>.Handle(UpdateAuthorCommandRequest request, CancellationToken cancellationToken)
+         public async Task<BaseResponse> Handle(UpdateAuthorCommandRequest request, CancellationToken cancellationToken)
         {
             bool result = await _authorReadRepository.AnyAsync(data => data.Id == request.Author.Id,false);
             if (result==true)
             {
                  _authorWriteRepository.Update(request.Author);
-                return new();
+                return new SuccessWithNoDataResponse("Yazar Güncellendi");
             }
             throw new Exception("Hata");
         }

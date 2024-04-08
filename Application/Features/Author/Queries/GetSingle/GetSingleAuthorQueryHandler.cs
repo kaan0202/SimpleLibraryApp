@@ -1,5 +1,7 @@
 ﻿using Application.DTOs.AuthorDto;
 using Application.Repositories.Author;
+using Domain.Results;
+using Domain.Results.Common;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -9,14 +11,14 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Author.Queries.Single
 {
-    public class GetSingleAuthorQueryHandler : IRequestHandler<GetSingleAuthorQueryRequest, GetSingleAuthorQueryResponse>
+    public class GetSingleAuthorQueryHandler : IRequestHandler<GetSingleAuthorQueryRequest, BaseDataResponse<QueryAuthorDto>>
     {
         readonly IAuthorReadRepository _authorReadRepository;
         public GetSingleAuthorQueryHandler(IAuthorReadRepository authorReadRepository)
         {
             _authorReadRepository = authorReadRepository;
         }
-        async Task<GetSingleAuthorQueryResponse> IRequestHandler<GetSingleAuthorQueryRequest, GetSingleAuthorQueryResponse>.Handle(GetSingleAuthorQueryRequest request, CancellationToken cancellationToken)
+       public async Task<BaseDataResponse<QueryAuthorDto>> Handle(GetSingleAuthorQueryRequest request, CancellationToken cancellationToken)
         {
             bool result = await _authorReadRepository.AnyAsync(data => data.Id == request.Id, false);
             if (result)
@@ -28,7 +30,7 @@ namespace Application.Features.Author.Queries.Single
                 authorDto.Surname = author.Surname;
                 authorDto.Name = author.Name;
                 
-                return new() { AuthorDto = authorDto };
+                return new SuccessDataResponse<QueryAuthorDto>(authorDto);
             }
             throw new Exception("Hata");
         }

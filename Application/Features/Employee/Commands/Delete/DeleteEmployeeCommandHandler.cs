@@ -1,4 +1,6 @@
 ﻿using Application.Repositories.Employee;
+using Domain.Results;
+using Domain.Results.Common;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Employee.Commands.Delete
 {
-    public class DeleteEmployeeCommandHandler : IRequestHandler<DeleteEmployeeCommandRequest, DeleteEmployeeCommandResponse>
+    public class DeleteEmployeeCommandHandler : IRequestHandler<DeleteEmployeeCommandRequest, BaseResponse>
     {
         readonly IEmployeeReadRepository _employeeReadRepository;
         readonly IEmployeeWriteRepository _employeeWriteRepository;
@@ -17,13 +19,13 @@ namespace Application.Features.Employee.Commands.Delete
             _employeeReadRepository = employeeReadRepository;
             _employeeWriteRepository = employeeWriteRepository;
         }
-        async Task<DeleteEmployeeCommandResponse> IRequestHandler<DeleteEmployeeCommandRequest, DeleteEmployeeCommandResponse>.Handle(DeleteEmployeeCommandRequest request, CancellationToken cancellationToken)
+        public async Task<BaseResponse> Handle(DeleteEmployeeCommandRequest request, CancellationToken cancellationToken)
         {
             bool result = await _employeeReadRepository.AnyAsync(data => data.Id == request.Id,false);
             if (result)
             {
                 await _employeeWriteRepository.RemoveByIdAsync(request.Id);
-                return new();
+                return new SuccessWithNoDataResponse("Çalışan Silindi");
             }
             throw new Exception("Hata");
         }

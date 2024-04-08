@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Domain.Results.Common;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Person.Commands.Add
 {
-    public class AddPersonCommandRequest:IRequest<AddPersonCommandResponse>
+    public class AddPersonCommandRequest:IRequest<BaseResponse>
     {
         public Domain.Entities.Person Person { get; set; }
     }

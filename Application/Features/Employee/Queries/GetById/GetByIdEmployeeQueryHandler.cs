@@ -1,5 +1,7 @@
 ﻿using Application.DTOs.EmployeeDto;
 using Application.Repositories.Employee;
+using Domain.Results;
+using Domain.Results.Common;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -9,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Employee.Queries.GetById
 {
-    public class GetByIdEmployeeQueryHandler : IRequestHandler<GetByIdEmployeeQueryRequest, GetByIdEmployeeQueryResponse>
+    public class GetByIdEmployeeQueryHandler : IRequestHandler<GetByIdEmployeeQueryRequest, BaseDataResponse<QueryEmployeeDto>>
     {
         readonly IEmployeeReadRepository _employeeReadRepository;
 
@@ -18,7 +20,7 @@ namespace Application.Features.Employee.Queries.GetById
             _employeeReadRepository = employeeReadRepository;
         }
 
-        async Task<GetByIdEmployeeQueryResponse> IRequestHandler<GetByIdEmployeeQueryRequest, GetByIdEmployeeQueryResponse>.Handle(GetByIdEmployeeQueryRequest request, CancellationToken cancellationToken)
+        public async Task<BaseDataResponse<QueryEmployeeDto>> Handle(GetByIdEmployeeQueryRequest request, CancellationToken cancellationToken)
         {
             bool result = await _employeeReadRepository.AnyAsync(data => data.Id == request.Id,false);
             if (result)
@@ -31,10 +33,8 @@ namespace Application.Features.Employee.Queries.GetById
                 queryEmployeeDto.Gender= employee.Gender;
                 queryEmployeeDto.Id = request.Id;
                 queryEmployeeDto.Name = employee.Name;
-                return new()
-                {
-                    EmployeeDto = queryEmployeeDto
-                };
+                return new SuccessDataResponse<QueryEmployeeDto>(queryEmployeeDto);
+                
 
             }
             throw new Exception("Hata");

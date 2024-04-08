@@ -1,4 +1,6 @@
 ﻿using Application.Repositories.Catalog;
+using Domain.Results;
+using Domain.Results.Common;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Catalog.Commands.Update
 {
-    public class UpdateCatalogCommandHandler : IRequestHandler<UpdateCatalogCommandRequest, UpdateCatalogCommandResponse>
+    public class UpdateCatalogCommandHandler : IRequestHandler<UpdateCatalogCommandRequest, BaseResponse>
     {
         readonly ICatalogReadRepository _catalogReadRepository;
         readonly ICatalogWriteRepository _catalogWriteRepository;
@@ -17,13 +19,13 @@ namespace Application.Features.Catalog.Commands.Update
             _catalogReadRepository = catalogReadRepository;
             _catalogWriteRepository = catalogWriteRepository;
         }
-        async Task<UpdateCatalogCommandResponse> IRequestHandler<UpdateCatalogCommandRequest, UpdateCatalogCommandResponse>.Handle(UpdateCatalogCommandRequest request, CancellationToken cancellationToken)
+        public async Task<BaseResponse> Handle(UpdateCatalogCommandRequest request, CancellationToken cancellationToken)
         {
             bool result = await _catalogReadRepository.AnyAsync(data => data.Id == request.Catalog.Id,false);
-            if(result = true)
+            if(result == true)
             {
                 _catalogWriteRepository.Update(request.Catalog);
-                return new();
+                return new SuccessWithNoDataResponse("Katalog Güncellendi");
             }
             throw new Exception("Hata");
         }

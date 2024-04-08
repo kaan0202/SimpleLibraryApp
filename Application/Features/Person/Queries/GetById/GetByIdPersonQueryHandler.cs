@@ -1,5 +1,7 @@
 ﻿using Application.DTOs.PersonDto;
 using Application.Repositories.Person;
+using Domain.Results;
+using Domain.Results.Common;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -9,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Person.Queries.GetById
 {
-    public class GetByIdPersonQueryHandler : IRequestHandler<GetByIdPersonQueryRequest, GetByIdPersonQueryResponse>
+    public class GetByIdPersonQueryHandler : IRequestHandler<GetByIdPersonQueryRequest, BaseDataResponse<QueryPersonDto>>
     {
         readonly IPersonReadRepository _personReadRepository;
 
@@ -18,7 +20,7 @@ namespace Application.Features.Person.Queries.GetById
             _personReadRepository = personReadRepository;
         }
 
-        async Task<GetByIdPersonQueryResponse> IRequestHandler<GetByIdPersonQueryRequest, GetByIdPersonQueryResponse>.Handle(GetByIdPersonQueryRequest request, CancellationToken cancellationToken)
+        public async Task<BaseDataResponse<QueryPersonDto>> Handle(GetByIdPersonQueryRequest request, CancellationToken cancellationToken)
         {
             bool result = await _personReadRepository.AnyAsync(data => data.Id == request.Id,false);
             if (result)
@@ -39,10 +41,8 @@ namespace Application.Features.Person.Queries.GetById
                     PhoneNumber = person.Address.PhoneNumber,
 
                 };
-                return new()
-                {
-                    PersonDto = personDto
-                };
+                return new SuccessDataResponse<QueryPersonDto>(personDto);
+               
             }
             throw new Exception("Hata");
         }

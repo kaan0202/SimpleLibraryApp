@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using Application.DTOs.NeighboorHoodDto;
+using Domain.Results.Common;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.NeighboorHood.Queries.GetAll
 {
-    public class GetAllNeighboorHoodQueryRequest:IRequest<GetAllNeighboorHoodQueryResponse>
+    public class GetAllNeighboorHoodQueryRequest:IRequest<BaseDataResponse<List<QueryNeighboorHoodDto>>>
     {
     }
 }

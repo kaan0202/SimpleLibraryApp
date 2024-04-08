@@ -1,4 +1,6 @@
 ﻿using Application.Repositories.NeighboorHood;
+using Domain.Results;
+using Domain.Results.Common;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,17 +10,17 @@ using System.Threading.Tasks;
 
 namespace Application.Features.NeighboorHood.Commands.Add
 {
-    public class AddNeighboorHoodCommandHandler : IRequestHandler<AddNeighboorHoodCommandRequest, AddNeighboorHoodCommandResponse>
+    public class AddNeighboorHoodCommandHandler : IRequestHandler<AddNeighboorHoodCommandRequest, BaseResponse>
     {
         readonly INeighBoorHoodWriteRepository _neighBoorHoodWriteRepository;
         public AddNeighboorHoodCommandHandler(INeighBoorHoodWriteRepository neighBoorHoodWriteRepository)
         {
             _neighBoorHoodWriteRepository = neighBoorHoodWriteRepository;
         }
-        async Task<AddNeighboorHoodCommandResponse> IRequestHandler<AddNeighboorHoodCommandRequest, AddNeighboorHoodCommandResponse>.Handle(AddNeighboorHoodCommandRequest request, CancellationToken cancellationToken)
+        public async Task<BaseResponse> Handle(AddNeighboorHoodCommandRequest request, CancellationToken cancellationToken)
         {
             await _neighBoorHoodWriteRepository.AddAsync(request.NeighboorHood);
-            return new();
+            return new SuccessWithNoDataResponse("Mahalle eklendi");
         }
     }
 }

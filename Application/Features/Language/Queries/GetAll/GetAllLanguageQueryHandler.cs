@@ -1,5 +1,7 @@
 ﻿using Application.DTOs.LanguageDto;
 using Application.Repositories.Language;
+using Domain.Results;
+using Domain.Results.Common;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Language.Queries.GetAll
 {
-    public class GetAllLanguageQueryHandler : IRequestHandler<GetAllLanguageQueryRequest, GetAllLanguageQueryResponse>
+    public class GetAllLanguageQueryHandler : IRequestHandler<GetAllLanguageQueryRequest, BaseDataResponse<List<QueryLanguageDto>>>
     {
         readonly ILanguageReadRepository _languageReadRepository;
 
@@ -19,7 +21,7 @@ namespace Application.Features.Language.Queries.GetAll
             _languageReadRepository = languageReadRepository;
         }
 
-        async Task<GetAllLanguageQueryResponse> IRequestHandler<GetAllLanguageQueryRequest, GetAllLanguageQueryResponse>.Handle(GetAllLanguageQueryRequest request, CancellationToken cancellationToken)
+        public async Task<BaseDataResponse<List<QueryLanguageDto>>> Handle(GetAllLanguageQueryRequest request, CancellationToken cancellationToken)
         {
             var languages = await _languageReadRepository.GetAll().ToListAsync();
             List<QueryLanguageDto> queryLanguageDtos = new();
@@ -30,10 +32,8 @@ namespace Application.Features.Language.Queries.GetAll
                 queryLanguageDto.Id = language.Id;
                 queryLanguageDtos.Add(queryLanguageDto);
             }
-            return new()
-            {
-                LanguageDtos = queryLanguageDtos
-            };
+            return new SuccessDataResponse<List<QueryLanguageDto>>(queryLanguageDtos);
+            
         }
         
     }

@@ -1,5 +1,7 @@
 ﻿using Application.DTOs.BookDto;
 using Application.Repositories.Book;
+using Domain.Results;
+using Domain.Results.Common;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Book.Queries.GetAll
 {
-    public class GetAllBookQueryHandler : IRequestHandler<GetAllBookQueryRequest, GetAllBookQueryResponse>
+    public class GetAllBookQueryHandler : IRequestHandler<GetAllBookQueryRequest, BaseDataResponse<List<QueryBookDto>>>
     {
         readonly IBookReadRepository _bookReadRepository;
          public GetAllBookQueryHandler(IBookReadRepository bookReadRepository)
@@ -18,7 +20,7 @@ namespace Application.Features.Book.Queries.GetAll
             _bookReadRepository = bookReadRepository;
           }
 
-        public async Task<GetAllBookQueryResponse> Handle(GetAllBookQueryRequest request, CancellationToken cancellationToken)
+        public async Task<BaseDataResponse<List<QueryBookDto>>> Handle(GetAllBookQueryRequest request, CancellationToken cancellationToken)
         {
             var books =  await _bookReadRepository.Table.Include(x => x.Author).Include(x => x.Catalog).Include(x => x.Language).ToListAsync();
 
@@ -53,10 +55,7 @@ namespace Application.Features.Book.Queries.GetAll
 
             }
 
-            return  new GetAllBookQueryResponse()
-            {
-                BookDtos = queryBookDtos
-            };
+           return new SuccessDataResponse<List<QueryBookDto>>(queryBookDtos);
 
 
 

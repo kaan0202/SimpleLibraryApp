@@ -1,5 +1,7 @@
 ﻿using Application.DTOs.PersonDto;
 using Application.Repositories.Person;
+using Domain.Results;
+using Domain.Results.Common;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Person.Queries.GetAll
 {
-    public class GetAllPersonQueryHandler : IRequestHandler<GetAllPersonQueryRequest, GetAllPersonQueryResponse>
+    public class GetAllPersonQueryHandler : IRequestHandler<GetAllPersonQueryRequest, BaseDataResponse<List<QueryPersonDto>>>
     {
         readonly IPersonReadRepository _personReadRepository;
 
@@ -19,7 +21,7 @@ namespace Application.Features.Person.Queries.GetAll
             _personReadRepository = personReadRepository;
         }
 
-        async Task<GetAllPersonQueryResponse> IRequestHandler<GetAllPersonQueryRequest, GetAllPersonQueryResponse>.Handle(GetAllPersonQueryRequest request, CancellationToken cancellationToken)
+        public async Task<BaseDataResponse<List<QueryPersonDto>>> Handle(GetAllPersonQueryRequest request, CancellationToken cancellationToken)
         {
             var persons = await _personReadRepository.GetAll().ToListAsync();
             List<QueryPersonDto> personDtos = new();
@@ -37,17 +39,18 @@ namespace Application.Features.Person.Queries.GetAll
                     Id = person.AddressId,
                     OpenAddress = person.Address.OpenAddress,
                     PhoneNumber = person.Address.PhoneNumber,
-                    NeighboorHood= new()
+                    NeighboorHood = new()
                     {
-                       Name = person.Address.NeighboorHood.Name 
-                    }
+                        Name = person.Address.NeighboorHood.Name
+                    },
+                    
                 };
+                personDtos.Add(queryPersonDto);
                 
             }
-            return new()
-            {
-                PersonDtos = personDtos
-            };
+            return new SuccessDataResponse<List<QueryPersonDto>>(personDtos);
+
+
         }
     }
 }
