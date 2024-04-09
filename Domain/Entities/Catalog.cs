@@ -12,11 +12,11 @@ namespace Domain.Entities
     {
         
         public string CatalogName { get; set; }
-        public int LanguageId { get; set; }
+        public int? LanguageId { get; set; }
 
 
 
-        public ICollection<Book> Books { get; set; }
-        public Language Language { get; set; }
+        public ICollection<Book>? Books { get; set; }
+        public Language? Language { get; set; }
     }
 }

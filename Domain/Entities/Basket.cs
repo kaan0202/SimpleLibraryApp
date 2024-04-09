@@ -11,7 +11,7 @@ namespace Domain.Entities
     {
         public int PersonId { get; set; }
 
-        public Person Person { get; set; }
-        public List<Book> Books {  get; set; }
+        public Person? Person { get; set; }
+        public List<Book>? Books {  get; set; }
     }
 }

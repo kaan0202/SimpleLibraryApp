@@ -11,8 +11,8 @@ namespace Domain.Entities
     {
         
         public string Name { get; set; }
-        public int CatalogId { get; set; }
-        public ICollection<Book> Books { get; set; }
-        public Catalog Catalog { get; set; }
+        public int? CatalogId { get; set; }
+        public ICollection<Book>? Books { get; set; }
+        public List<Catalog>? Catalog { get; set; }
     }
     }

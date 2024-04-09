@@ -11,6 +11,6 @@ namespace Domain.Entities
     {
         
         public string Name { get; set; }
-        public IList<Address> Addresses { get; set; }
+        public IList<Address>? Addresses { get; set; }
     }
 }
