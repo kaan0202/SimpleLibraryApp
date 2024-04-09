@@ -1,4 +1,5 @@
-﻿using Application.Repositories.Basket;
+﻿using Application.Exceptions;
+using Application.Repositories.Basket;
 using Domain.Results;
 using Domain.Results.Common;
 using MediatR;
@@ -27,7 +28,7 @@ namespace Application.Features.Basket.Queries.GetSingle
                 var basket = await _repository.GetSingleAsync(data => data.Id == request.Id && data.PersonId == request.PersonId, false);
                 return new SuccessDataResponse<Domain.Entities.Basket>(basket);
             }
-            throw new Exception("Hata");
+            throw new NotFoundException("Hata");
         }
     }
 }

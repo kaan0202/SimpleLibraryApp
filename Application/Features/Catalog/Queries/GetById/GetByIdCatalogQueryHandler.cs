@@ -1,5 +1,8 @@
 ﻿using Application.DTOs.CatalogDto;
+using Application.Exceptions;
 using Application.Repositories.Catalog;
+using Domain.Results;
+using Domain.Results.Common;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -9,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Catalog.Queries.GetById
 {
-    public class GetByIdCatalogQueryHandler : IRequestHandler<GetByIdCatalogQueryRequest, GetByIdCatalogQueryResponse>
+    public class GetByIdCatalogQueryHandler : IRequestHandler<GetByIdCatalogQueryRequest, BaseDataResponse<QueryCatalogDto>>
     {
         readonly ICatalogReadRepository _readRepository;
 
@@ -18,7 +21,7 @@ namespace Application.Features.Catalog.Queries.GetById
             _readRepository = readRepository;
         }
 
-        async Task<GetByIdCatalogQueryResponse> IRequestHandler<GetByIdCatalogQueryRequest, GetByIdCatalogQueryResponse>.Handle(GetByIdCatalogQueryRequest request, CancellationToken cancellationToken)
+        public async Task<BaseDataResponse<QueryCatalogDto>> Handle(GetByIdCatalogQueryRequest request, CancellationToken cancellationToken)
         {
             bool result = await _readRepository.AnyAsync(data => data.Id == request.Id,false);
             if (result)
@@ -27,14 +30,11 @@ namespace Application.Features.Catalog.Queries.GetById
                 QueryCatalogDto queryCatalogDto = new();
                 queryCatalogDto.CatalogName = catalog.CatalogName;
                 queryCatalogDto.Id = catalog.Id;
-                return new()
-                {
-                    CatalogDto = queryCatalogDto
-                };
+               return new SuccessDataResponse<QueryCatalogDto>(queryCatalogDto);
                 
 
             }
-            throw new Exception("Hata");
+            throw new NotFoundException("Hata");
         }
     }
 }

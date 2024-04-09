@@ -1,5 +1,8 @@
 ﻿using Application.DTOs.CatalogDto;
+using Application.Exceptions;
 using Application.Repositories.Catalog;
+using Domain.Results;
+using Domain.Results.Common;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -9,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Catalog.Queries.GetSingle
 {
-    public class GetSingleCatalogQueryHandler : IRequestHandler<GetSingleCatalogQueryRequest, GetSingleCatalogQueryResponse>
+    public class GetSingleCatalogQueryHandler : IRequestHandler<GetSingleCatalogQueryRequest, BaseDataResponse<QueryCatalogDto>>
     {
         readonly ICatalogReadRepository _readRepository;
 
@@ -18,7 +21,7 @@ namespace Application.Features.Catalog.Queries.GetSingle
             _readRepository = readRepository;
         }
 
-        async Task<GetSingleCatalogQueryResponse> IRequestHandler<GetSingleCatalogQueryRequest, GetSingleCatalogQueryResponse>.Handle(GetSingleCatalogQueryRequest request, CancellationToken cancellationToken)
+       public async Task<BaseDataResponse<QueryCatalogDto>> Handle(GetSingleCatalogQueryRequest request, CancellationToken cancellationToken)
         {
             bool result = await _readRepository.AnyAsync(data => data.Id == request.Id,false);
             if(result)
@@ -28,13 +31,10 @@ namespace Application.Features.Catalog.Queries.GetSingle
                 catalogDto.CatalogName=catalog.CatalogName;
                 catalogDto.Id=request.Id;
 
-                return new()
-                {
-                    
-                    CatalogDto= catalogDto,
-                };
+                return new SuccessDataResponse<QueryCatalogDto>(catalogDto);
+               
             }
-            throw new Exception("Hata");
+            throw new NotFoundException("Hata");
         }
     }
 }

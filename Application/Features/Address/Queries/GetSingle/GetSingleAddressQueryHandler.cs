@@ -1,4 +1,5 @@
 ﻿using Application.DTOs.AddressDto;
+using Application.Exceptions;
 using Application.Features.Address.Queries.GetById;
 using Application.Repositories.Address;
 using Domain.Results;
@@ -48,7 +49,7 @@ namespace Application.Features.Address.Queries.GetSingle
                 };
                 return new SuccessDataResponse<QueryAddressDto>(queryAddressDto);
             }
-            throw new Exception("Hata");
+            throw new NotFoundException("Hata");
 
         }
 

@@ -9,5 +9,9 @@ namespace Application.Features.Catalog.Queries.GetSingle
 {
     public class ValidatorSettings:AbstractValidator<GetSingleCatalogQueryRequest>
     {
+        public ValidatorSettings()
+        {
+            RuleFor(x => x.Id).NotEmpty().GreaterThan(0);
+        }
     }
 }

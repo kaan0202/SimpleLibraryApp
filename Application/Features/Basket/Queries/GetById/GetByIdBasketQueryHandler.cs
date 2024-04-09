@@ -1,4 +1,5 @@
 ﻿
+using Application.Exceptions;
 using Application.Repositories.Basket;
 using Domain.Results;
 using Domain.Results.Common;
@@ -29,7 +30,7 @@ namespace Application.Features.Basket.Queries.GetById
                 return new SuccessDataResponse<Domain.Entities.Basket>(basket);
 
             }
-            throw new Exception("Hata");
+            throw new NotFoundException("Hata");
         }
     }
 }
