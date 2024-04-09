@@ -10,6 +10,13 @@ namespace Application.Features.Person.Commands.Update
 {
     public class UpdatePersonCommandRequest : IRequest<BaseResponse>
     {
-        public Domain.Entities.Person Person { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        
+        public int? AddressId { get; set; }
+        public string Surname { get; set; }
+        public DateTime BirthDay { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
     }
 }

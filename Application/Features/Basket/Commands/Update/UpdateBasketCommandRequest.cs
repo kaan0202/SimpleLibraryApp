@@ -10,6 +10,7 @@ namespace Application.Features.Basket.Commands.Update
 {
     public class UpdateBasketCommandRequest:IRequest<BaseResponse>
     {
-        public Domain.Entities.Basket Basket { get; set; }
+        public int Id { get; set; }
+        public int PersonId { get; set; }
     }
 }
