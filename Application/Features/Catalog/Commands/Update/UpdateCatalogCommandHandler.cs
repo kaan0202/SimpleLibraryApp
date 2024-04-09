@@ -21,10 +21,16 @@ namespace Application.Features.Catalog.Commands.Update
         }
         public async Task<BaseResponse> Handle(UpdateCatalogCommandRequest request, CancellationToken cancellationToken)
         {
-            bool result = await _catalogReadRepository.AnyAsync(data => data.Id == request.Catalog.Id,false);
+            bool result = await _catalogReadRepository.AnyAsync(data => data.Id == request.Id,false);
             if(result == true)
             {
-                _catalogWriteRepository.Update(request.Catalog);
+                Domain.Entities.Catalog catalog = new()
+                {
+                    CatalogName = request.CatalogName,
+                    LanguageId = request.LanguageId,
+
+                };
+                _catalogWriteRepository.Update(catalog);
                 return new SuccessWithNoDataResponse("Katalog Güncellendi");
             }
             throw new Exception("Hata");

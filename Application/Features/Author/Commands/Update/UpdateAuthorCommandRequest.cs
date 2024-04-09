@@ -10,6 +10,9 @@ namespace Application.Features.Author.Commands.Update
 {
     public class UpdateAuthorCommandRequest:IRequest<BaseResponse>
     {
-        public Domain.Entities.Author Author { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public DateTime BirthDay { get; set; }
+        public string Surname { get; set; }
     }
 }

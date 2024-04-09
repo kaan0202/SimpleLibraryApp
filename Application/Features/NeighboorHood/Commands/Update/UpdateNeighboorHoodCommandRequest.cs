@@ -10,6 +10,7 @@ namespace Application.Features.NeighboorHood.Commands.Update
 {
     public class UpdateNeighboorHoodCommandRequest : IRequest<BaseResponse>
     {
-        public Domain.Entities.NeighboorHood NeighboorHood { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }

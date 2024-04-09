@@ -23,10 +23,15 @@ namespace Application.Features.Basket.Commands.Update
 
         public async Task<BaseResponse> Handle(UpdateBasketCommandRequest request, CancellationToken cancellationToken)
         {
-            bool result = await _basketReadRepository.AnyAsync(data => data.Id == request.Basket.Id);
+            bool result = await _basketReadRepository.AnyAsync(data => data.Id == request.Id && data.PersonId == request.PersonId,false);
             if (result)
             {
-                _basketWriteRepository.Update(request.Basket);
+                Domain.Entities.Basket basket = new()
+                {
+                    Books = request.Books
+
+                };
+                _basketWriteRepository.Update(basket);
                 return new SuccessWithNoDataResponse("Sepet Güncellendi");
             }
             throw new Exception("Hata");

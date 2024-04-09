@@ -21,10 +21,15 @@ namespace Application.Features.Language.Commands.Update
         }
         public async Task<BaseResponse> Handle(UpdateLanguageCommandRequest request, CancellationToken cancellationToken)
         {
-            bool result = await _languageReadRepository.AnyAsync(data => data.Id == request.Language.Id,false);
+            bool result = await _languageReadRepository.AnyAsync(data => data.Id == request.Id,false);
             if (result)
             {
-                _languageWriteRepository.Update(request.Language);
+                Domain.Entities.Language language = new()
+                {
+                    CatalogId = request.CatalogId,
+                    Name = request.Name,
+                };
+                _languageWriteRepository.Update(language);
                 return new SuccessWithNoDataResponse("Dil Güncellendi");
             }
             throw new Exception("Hata");

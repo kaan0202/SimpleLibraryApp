@@ -10,6 +10,8 @@ namespace Application.Features.Catalog.Commands.Update
 {
     public class UpdateCatalogCommandRequest:IRequest<BaseResponse>
     {
-        public Domain.Entities.Catalog Catalog { get; set; }
+        public int Id { get; set; }
+        public string CatalogName { get; set; }
+        public int LanguageId { get; set; }
     }
 }

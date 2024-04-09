@@ -22,10 +22,19 @@ namespace Application.Features.Employee.Commands.Update
         }
         public async Task<BaseResponse> Handle(UpdateEmployeeCommandRequest request, CancellationToken cancellationToken)
         {
-            bool result = await _employeeReadRepository.AnyAsync(data => data.Id == request.Employee.Id, false);
+            bool result = await _employeeReadRepository.AnyAsync(data => data.Id == request.Id, false);
             if (result)
             {
-                _employeeWriteRepository.Update(request.Employee);
+                Domain.Entities.Employee employee = new()
+                {
+                    Gender = request.Gender,
+                    Name = request.Name,
+                    Salary = request.Salary,
+                    Status = request.Status,
+                    Surname = request.Surname
+
+                };
+                _employeeWriteRepository.Update(employee);
                 return new SuccessWithNoDataResponse("Çalışan Güncellendi");
             }
             throw new Exception("Hata");

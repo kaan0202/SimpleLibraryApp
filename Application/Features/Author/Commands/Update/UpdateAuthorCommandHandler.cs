@@ -23,10 +23,17 @@ namespace Application.Features.Author.Commands.Update
 
          public async Task<BaseResponse> Handle(UpdateAuthorCommandRequest request, CancellationToken cancellationToken)
         {
-            bool result = await _authorReadRepository.AnyAsync(data => data.Id == request.Author.Id,false);
+            bool result = await _authorReadRepository.AnyAsync(data => data.Id == request.Id,false);
             if (result==true)
             {
-                 _authorWriteRepository.Update(request.Author);
+                Domain.Entities.Author author = new()
+                {
+                    BirthDay = request.BirthDay,
+                    Name = request.Name,
+                    Surname = request.Surname,
+
+                };
+                 _authorWriteRepository.Update(author);
                 return new SuccessWithNoDataResponse("Yazar Güncellendi");
             }
             throw new Exception("Hata");

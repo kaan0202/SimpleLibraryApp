@@ -10,6 +10,8 @@ namespace Application.Features.Language.Commands.Update
 {
     public class UpdateLanguageCommandRequest : IRequest<BaseResponse>
     {
-        public Domain.Entities.Language Language { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int CatalogId { get; set; }
     }
 }

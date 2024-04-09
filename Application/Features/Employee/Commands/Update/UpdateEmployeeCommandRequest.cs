@@ -10,6 +10,11 @@ namespace Application.Features.Employee.Commands.Update
 {
     public class UpdateEmployeeCommandRequest:IRequest<BaseResponse>
     {
-        public Domain.Entities.Employee Employee { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Surname { get; set; }
+        public int Salary { get; set; }
+        public bool Status { get; set; }
+        public string Gender { get; set; }
     }
 }

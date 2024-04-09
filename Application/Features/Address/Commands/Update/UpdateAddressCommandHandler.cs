@@ -21,10 +21,21 @@ namespace Application.Features.Address.Commands.Update
         }
         async Task<BaseResponse> IRequestHandler<UpdateAddressCommandRequest, BaseResponse>.Handle(UpdateAddressCommandRequest request, CancellationToken cancellationToken)
         {
-            bool result = await _addressReadRepository.AnyAsync(data => data.Id == request.Address.Id);
+            bool result = await _addressReadRepository.AnyAsync(data => data.Id == request.Id,false);
             if (result == true)
             {
-                _addressWriteRepository.Update(request.Address);
+                Domain.Entities.Address address = new()
+                {
+                    AddressTitle = request.AddressTitle,
+                    NeighboorHoodId = request.NeighboorHoodId,
+                    OpenAddress = request.OpenAddress,
+                    Description = request.Description,
+                    PhoneNumber = request.PhoneNumber,
+                    PersonId = request.PersonId,
+                    
+                };
+
+                _addressWriteRepository.Update(address);
                 return new SuccessWithNoDataResponse("Adres Güncellendi");
             }
             throw new Exception("Hata");

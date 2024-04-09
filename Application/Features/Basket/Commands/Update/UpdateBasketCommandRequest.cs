@@ -12,5 +12,6 @@ namespace Application.Features.Basket.Commands.Update
     {
         public int Id { get; set; }
         public int PersonId { get; set; }
+        public List<Domain.Entities.Book> Books { get; set; }
     }
 }

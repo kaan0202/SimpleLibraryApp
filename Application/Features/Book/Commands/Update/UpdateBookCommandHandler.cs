@@ -21,11 +21,21 @@ namespace Application.Features.Book.Commands.Update
         }
         public async Task<BaseResponse> Handle(UpdateBookCommandRequest request, CancellationToken cancellationToken)
         {
-            bool result =  await _bookReadRepository.AnyAsync(data => data.Id == request.Book.Id,false);
+            bool result =  await _bookReadRepository.AnyAsync(data => data.Id == request.Id,false);
 
             if (result)
             {
-                _bookWriteRepository.Update(request.Book);
+                Domain.Entities.Book book = new()
+                {
+                    AuthorId = request.AuthorId,
+                    LanguageId = request.LanguageId,
+                    Name = request.Name,
+                    PageOfNumber = request.PageOfNumber,
+                    CatalogId = request.CatalogId,
+                    
+
+                };
+                _bookWriteRepository.Update(book);
                 return new SuccessWithNoDataResponse("Kitap Güncellendi");
             }
             throw new Exception("Hata");

@@ -21,9 +21,15 @@ namespace Application.Features.NeighboorHood.Commands.Update
         }
         public async Task<BaseResponse> Handle(UpdateNeighboorHoodCommandRequest request, CancellationToken cancellationToken)
         {
-            bool result = await _neighboorHoodReadRepository.AnyAsync(data => data.Id == request.NeighboorHood.Id, false);
-            if (result) { 
-                _neighboorHoodWriteRepository.Update(request.NeighboorHood);
+            bool result = await _neighboorHoodReadRepository.AnyAsync(data => data.Id == request.Id, false);
+            if (result) {
+                Domain.Entities.NeighboorHood neighboorHood = new()
+                {
+
+                    Name = request.Name,
+
+                };
+                _neighboorHoodWriteRepository.Update(neighboorHood);
                 return new SuccessWithNoDataResponse("Mahalle Güncellendi");
             }
             throw new Exception("Hata");
