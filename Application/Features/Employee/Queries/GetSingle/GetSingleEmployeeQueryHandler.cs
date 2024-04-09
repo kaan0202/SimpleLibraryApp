@@ -1,4 +1,5 @@
 ﻿using Application.DTOs.EmployeeDto;
+using Application.Exceptions;
 using Application.Repositories.Employee;
 using Domain.Results;
 using Domain.Results.Common;
@@ -36,7 +37,7 @@ namespace Application.Features.Employee.Queries.GetSingle
                 return new SuccessDataResponse<QueryEmployeeDto>(queryEmployeeDto);
                
             }
-            throw new Exception("Hata");
+            throw new NotFoundException("Hata");
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Application.DTOs.BookDto;
+using Application.Exceptions;
 using Application.Repositories.Book;
 using Domain.Results;
 using Domain.Results.Common;
@@ -37,7 +38,7 @@ namespace Application.Features.Book.Queries.GetSingle
                 };
                 queryBookDto.Catalog = new()
                 {
-                    Id = book.CatalogId,
+                    
                     CatalogName = book.Catalog.CatalogName,
 
 
@@ -46,7 +47,7 @@ namespace Application.Features.Book.Queries.GetSingle
 
                return new SuccessDataResponse<QueryBookDto>(queryBookDto);
             }
-            throw new Exception("Hata");
+            throw new NotFoundException("Hata");
         }
     }
 }

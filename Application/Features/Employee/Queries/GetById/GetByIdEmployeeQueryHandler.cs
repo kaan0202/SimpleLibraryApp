@@ -1,4 +1,5 @@
 ﻿using Application.DTOs.EmployeeDto;
+using Application.Exceptions;
 using Application.Repositories.Employee;
 using Domain.Results;
 using Domain.Results.Common;
@@ -37,7 +38,7 @@ namespace Application.Features.Employee.Queries.GetById
                 
 
             }
-            throw new Exception("Hata");
+            throw new NotFoundException("Hata");
         }
     }
 }

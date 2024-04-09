@@ -36,7 +36,7 @@ namespace Application.Features.Person.Queries.GetAll
                 {
                     AddressTitle = person.Address.AddressTitle,
                     Description = person.Address.Description,
-                    Id = person.AddressId,
+                    
                     OpenAddress = person.Address.OpenAddress,
                     PhoneNumber = person.Address.PhoneNumber,
                     NeighboorHood = new()

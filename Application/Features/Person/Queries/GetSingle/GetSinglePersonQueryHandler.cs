@@ -1,4 +1,5 @@
 ﻿using Application.DTOs.PersonDto;
+using Application.Exceptions;
 using Application.Repositories.Person;
 using Domain.Results;
 using Domain.Results.Common;
@@ -44,7 +45,7 @@ namespace Application.Features.Person.Queries.GetSingle
                 return new SuccessDataResponse<QueryPersonDto>(personDto);
                
             }
-            throw new Exception("Hata");
+            throw new NotFoundException("Hata");
         }
     }
 }

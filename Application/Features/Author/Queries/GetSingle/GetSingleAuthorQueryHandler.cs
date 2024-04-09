@@ -1,4 +1,5 @@
 ﻿using Application.DTOs.AuthorDto;
+using Application.Exceptions;
 using Application.Repositories.Author;
 using Domain.Results;
 using Domain.Results.Common;
@@ -32,7 +33,7 @@ namespace Application.Features.Author.Queries.Single
                 
                 return new SuccessDataResponse<QueryAuthorDto>(authorDto);
             }
-            throw new Exception("Hata");
+            throw new NotFoundException("Hata");
         }
     }
 }

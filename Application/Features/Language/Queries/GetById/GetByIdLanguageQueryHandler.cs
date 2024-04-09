@@ -1,4 +1,5 @@
 ﻿using Application.DTOs.LanguageDto;
+using Application.Exceptions;
 using Application.Repositories.Language;
 using Domain.Results;
 using Domain.Results.Common;
@@ -33,7 +34,7 @@ namespace Application.Features.Language.Queries.GetById
                 return new SuccessDataResponse<QueryLanguageDto>(languageDto);
                
             }
-            throw new Exception("Hata");
+            throw new NotFoundException("Hata");
         }
     }
 }
