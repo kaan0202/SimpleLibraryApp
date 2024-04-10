@@ -12,7 +12,7 @@ namespace Application.Features.Language.Commands.Update
         public ValidatorSettings()
         {
             RuleFor(x=>x.Name).NotEmpty();
-            RuleFor(x=>x.Id).NotEmpty().NotNull().GreaterThan(0);
+            RuleFor(x => x.Id).NotEmpty().GreaterThan(0);
             RuleFor(x=>x.CatalogId).NotEmpty().GreaterThan(0);
         }
     }

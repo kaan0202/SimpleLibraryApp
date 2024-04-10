@@ -5,15 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Features.Basket.Commands.Update
+namespace Application.Features.NeighboorHood.Queries.GetSingle
 {
-    public class ValidatorSettings:AbstractValidator<UpdateBasketCommandRequest>
+    public class ValidatorSettings:AbstractValidator<GetSingleNeighboorHoodQueryRequest>
     {
         public ValidatorSettings()
         {
             RuleFor(x => x.Id).NotEmpty().GreaterThan(0);
-            RuleFor(x=>x.PersonId).NotEmpty().GreaterThan(0);
-            
         }
     }
 }

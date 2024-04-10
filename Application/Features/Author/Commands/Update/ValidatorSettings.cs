@@ -11,9 +11,10 @@ namespace Application.Features.Author.Commands.Update
     {
         public ValidatorSettings()
         {
-            RuleFor(x=>x.Id).NotEmpty().NotNull().GreaterThan(0);
-            RuleFor(x =>x.Surname).NotEmpty().NotNull();
-            RuleFor(x =>x.BirthDay).NotEmpty().NotNull();
+            RuleFor(x => x.Id).NotEmpty().GreaterThan(0);
+            RuleFor(x => x.Name).NotEmpty().NotEqual(x =>x.Surname).Length(2,25);
+            RuleFor(x => x.Surname).NotEmpty().NotEqual(x=>x.Name).Length(2,50);
+            RuleFor(x => x.BirthDay).NotEmpty();
         }
     }
 }

@@ -11,11 +11,15 @@ namespace Application.Features.Employee.Commands.Update
     {
         public ValidatorSettings()
         {
-            RuleFor(x=>x.Id).NotEmpty().NotNull().GreaterThan(0);
-            RuleFor(x => x.Name).NotNull().NotEmpty();
-            RuleFor(x=>x.Salary).NotEmpty().NotNull().GreaterThan(0);
-            RuleFor(x => x.Surname).NotNull().NotEmpty();
-            RuleFor(x =>x.Gender).NotEmpty().NotNull();
+            RuleFor(x => x.Id).NotEmpty().GreaterThan(0);
+            RuleFor(x => x.Name).NotEmpty().NotEqual(x=>x.Surname);
+            RuleFor(x=>x.Salary).NotEmpty().GreaterThan(0);
+            RuleFor(x => x.Surname).NotEmpty().NotEqual(x=>x.Name);
+            RuleFor(x => x.Gender).NotEmpty();
+
+            //1.30  
+
+            //5.30
         }
     }
 }

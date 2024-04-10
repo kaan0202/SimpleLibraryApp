@@ -13,7 +13,6 @@ namespace Application.Features.Basket.Queries.GetSingle
         {
             RuleFor(x => x.Id)
                 .NotEmpty()
-                .NotNull()
                 .GreaterThan(0);
         }
     }

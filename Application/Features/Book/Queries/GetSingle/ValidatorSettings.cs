@@ -13,7 +13,6 @@ namespace Application.Features.Book.Queries.GetSingle
         {
             RuleFor(x => x.Id)
                 .NotEmpty()
-                .NotNull()
                 .GreaterThan(0);
         }
     }

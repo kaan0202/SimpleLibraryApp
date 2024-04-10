@@ -11,12 +11,12 @@ namespace Application.Features.Person.Commands.Update
     {
         public ValidatorSettings()
         {
-            RuleFor(x => x.Id).NotEmpty().NotNull().GreaterThan(0);
-            RuleFor(x=>x.AddressId).NotEmpty().NotNull().GreaterThan(0);
-            RuleFor(x => x.Password).NotNull().NotEmpty();
-            RuleFor(x => x.Email).NotEmpty().NotNull().EmailAddress();
-            RuleFor(x=>x.Surname).NotNull().NotEmpty();
-            RuleFor(x=>x.Name).NotEmpty().NotNull();
+            RuleFor(x => x.Id).NotEmpty().GreaterThan(0);
+            RuleFor(x=>x.AddressId).NotEmpty().GreaterThan(0);
+            RuleFor(x => x.Password).NotEmpty();
+            RuleFor(x => x.Email).NotEmpty().EmailAddress();
+            RuleFor(x=>x.Surname).NotEmpty().NotEqual(x=>x.Name);
+            RuleFor(x=>x.Name).NotEmpty().NotEqual(x=>x.Surname);
             RuleFor(x=>x.BirthDay).NotEmpty();
         }
     }

@@ -11,8 +11,8 @@ namespace Application.Features.NeighboorHood.Commands.Update
     {
         public ValidatorSettings()
         {
-            RuleFor(x => x.Id).NotEmpty().NotNull().GreaterThan(0);
-            RuleFor(x => x.Name).NotNull().NotEmpty();
+            RuleFor(x => x.Id).NotEmpty().GreaterThan(0);
+            RuleFor(x => x.Name).NotEmpty();
         }
     }
 }

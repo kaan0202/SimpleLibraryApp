@@ -13,7 +13,6 @@ namespace Application.Features.Address.Queries.GetById
         {
             RuleFor(x => x.Id)
                 .NotEmpty()
-                .NotNull()
                 .GreaterThan(0);
         }
 

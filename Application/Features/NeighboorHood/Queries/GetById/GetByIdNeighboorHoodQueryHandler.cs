@@ -1,4 +1,5 @@
 ﻿using Application.DTOs.NeighboorHoodDto;
+using Application.Exceptions;
 using Application.Repositories.NeighboorHood;
 using Domain.Results;
 using Domain.Results.Common;
@@ -32,7 +33,7 @@ namespace Application.Features.NeighboorHood.Queries.GetById
                 return new SuccessDataResponse<QueryNeighboorHoodDto>(queryNeighboorHoodDto);
                 
             }
-            throw new Exception("Hata");
+            throw new NotFoundException("Hata");
         }
     }
 }
