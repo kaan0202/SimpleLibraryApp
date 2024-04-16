@@ -1,4 +1,5 @@
 ﻿using Domain.Entities.Common;
+using Domain.Entities.File;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -17,7 +18,8 @@ namespace Domain.Entities
         public int AuthorId { get; set; }
         public int PageOfNumber { get; set; }
         public DateTime? DeletedDate { get; set; }
-       
+
+        public ICollection<BookImageFile>? Images { get; set; }
         public Catalog? Catalog { get; set; }
         public Author? Author { get; set; }
         public Language? Language { get; set; }

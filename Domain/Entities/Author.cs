@@ -1,4 +1,5 @@
 ﻿using Domain.Entities.Common;
+using Domain.Entities.File;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -14,9 +15,11 @@ namespace Domain.Entities
         public DateTime BirthDay { get; set; }
         public string Surname { get; set; }
         public ICollection<Book>? Books { get; set; }
+        public ICollection<AuthorImageFile>? Images { get; set; }
 
-       
-        
+
+
+
 
     }
 }
