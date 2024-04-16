@@ -17,7 +17,7 @@ namespace Persistance.EntityFramework.Configurations.Book
             builder.Property(x => x.Name).IsRequired();
             builder.Property(x => x.PageOfNumber).IsRequired();
           
-
+            builder.HasMany(x =>x.Images).WithOne(x =>x.Book).HasForeignKey(x => x.BookId);
 
             builder.HasOne(x => x.Author)
                 .WithMany(x => x.Books)

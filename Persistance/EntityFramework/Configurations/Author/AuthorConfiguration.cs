@@ -14,6 +14,9 @@ namespace Persistance.EntityFramework.Configurations.Author
         {
             builder.ToTable("Authors");
             builder.HasKey(x=> x.Id);
+
+            builder.HasMany(x =>x.Images).WithOne(x =>x.Author).HasForeignKey(x=>x.AuthorId);
+
             builder.Property(x => x.Surname).IsRequired();
             builder.Property(x => x.BirthDay).IsRequired();
             builder.Property(x => x.Name).IsRequired();
