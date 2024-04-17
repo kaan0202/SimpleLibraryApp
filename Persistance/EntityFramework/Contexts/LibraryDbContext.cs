@@ -1,19 +1,25 @@
 ﻿using Domain.Entities;
 using Domain.Entities.Common;
+using Domain.Entities.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Persistance.EntityFramework.Contexts
 {
-    public class LibraryDbContext : DbContext
+    public class LibraryDbContext : IdentityDbContext<AppUser,AppRole,string>
     {
-        public LibraryDbContext(DbContextOptions options) : base(options)
+        public LibraryDbContext(DbContextOptions options):base(options)
         {
+            
         }
+
+
 
         public DbSet<Book> Books { get; set; }
         public DbSet<Address> Addresses { get; set; }
@@ -30,10 +36,10 @@ namespace Persistance.EntityFramework.Contexts
 
 
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        protected override void OnModelCreating(ModelBuilder builder)
         {
-            
-            base.OnConfiguring(optionsBuilder);
+            builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            base.OnModelCreating(builder);
         }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
