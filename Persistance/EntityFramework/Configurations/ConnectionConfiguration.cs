@@ -14,7 +14,7 @@ namespace Persistance.EntityFramework.Configurations
             get
             {
                 ConfigurationManager configurationManager = new();
-                configurationManager.SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../../Presentation/ETicaretAPI.API"));
+                configurationManager.SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../API"));
                 configurationManager.AddJsonFile("appsettings.json");
                 return configurationManager.GetConnectionString("PostgreSql");
             }
