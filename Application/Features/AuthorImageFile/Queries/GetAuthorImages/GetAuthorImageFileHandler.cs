@@ -4,6 +4,7 @@ using Domain.Results;
 using Domain.Results.Common;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,23 +17,25 @@ namespace Application.Features.AuthorImageFile.Queries.GetAuthorImages
     {
         readonly IAuthorReadRepository _repository;
         readonly IStorageService _storageService;
+        readonly IConfiguration _configuration;
 
-        public GetAuthorImageFileHandler(IAuthorReadRepository repository,IStorageService storageService)
+        public GetAuthorImageFileHandler(IAuthorReadRepository repository, IStorageService storageService, IConfiguration configuration)
         {
             _repository = repository;
             _storageService = storageService;
+            _configuration = configuration;
         }
 
         public async Task<BaseDataResponse<List<Domain.Entities.File.AuthorImageFile>>> Handle(GetAuthorImageFileRequest request, CancellationToken cancellationToken)
         {
             var author = await _repository.Table.Include(x =>x.Images).FirstOrDefaultAsync(x =>x.Id == request.Id);
-            List <Domain.Entities.File.AuthorImageFile> authorImages = author.Images.Select(r => new Domain.Entities.File.AuthorImageFile
+            List<Domain.Entities.File.AuthorImageFile> authorImages = author.Images.Select(r => new Domain.Entities.File.AuthorImageFile
             {
                 FileName = r.FileName,
-                Path = r.Path,
+                Path = $"{_configuration["Storage:Local"]}/{r.Path}",
                 Storage = _storageService.StorageName,
                 AuthorId = author.Id,
-                
+
 
             }).ToList();
 
