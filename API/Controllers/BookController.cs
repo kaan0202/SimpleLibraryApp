@@ -5,12 +5,13 @@ using Application.Features.Book.Queries.GetAll;
 using Application.Features.Book.Queries.GetById;
 using Application.Features.Book.Queries.GetSingle;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    
+    [Authorize(AuthenticationSchemes = "Admin")]
     public class BookController : BaseController
     {
         public BookController(IMediator mediator) : base(mediator)
@@ -38,5 +39,6 @@ namespace API.Controllers
         [HttpGet("GetSingleOrDefault")]
         public async void GetSingleOrDefaultBook([FromQuery] GetSingleBookQueryRequest request)
             => await DataResponse(request);
+
     }
 }

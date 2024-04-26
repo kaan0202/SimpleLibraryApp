@@ -17,7 +17,7 @@ namespace Persistance.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.3")
+                .HasAnnotation("ProductVersion", "8.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -228,7 +228,7 @@ namespace Persistance.Migrations
                     b.ToTable("Employees", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Entities.File.AuthorImageFile", b =>
+            modelBuilder.Entity("Domain.Entities.File.File", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -236,11 +236,13 @@ namespace Persistance.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AuthorId")
-                        .HasColumnType("integer");
-
                     b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(21)
+                        .HasColumnType("character varying(21)");
 
                     b.Property<string>("FileName")
                         .IsRequired()
@@ -256,42 +258,11 @@ namespace Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AuthorId");
+                    b.ToTable("Files");
 
-                    b.ToTable("AuthorImageFile");
-                });
+                    b.HasDiscriminator<string>("Discriminator").HasValue("File");
 
-            modelBuilder.Entity("Domain.Entities.File.BookImageFile", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("BookId")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime?>("CreatedDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("FileName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Path")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Storage")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BookId");
-
-                    b.ToTable("BookImageFile");
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Domain.Entities.Identity.AppRole", b =>
@@ -365,6 +336,12 @@ namespace Persistance.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("boolean");
+
+                    b.Property<string>("RefreshToken")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("RefreshTokenEndDate")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("text");
@@ -594,6 +571,30 @@ namespace Persistance.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Domain.Entities.File.AuthorImageFile", b =>
+                {
+                    b.HasBaseType("Domain.Entities.File.File");
+
+                    b.Property<int>("AuthorId")
+                        .HasColumnType("integer");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasDiscriminator().HasValue("AuthorImageFile");
+                });
+
+            modelBuilder.Entity("Domain.Entities.File.BookImageFile", b =>
+                {
+                    b.HasBaseType("Domain.Entities.File.File");
+
+                    b.Property<int>("BookId")
+                        .HasColumnType("integer");
+
+                    b.HasIndex("BookId");
+
+                    b.HasDiscriminator().HasValue("BookImageFile");
+                });
+
             modelBuilder.Entity("Domain.Entities.Address", b =>
                 {
                     b.HasOne("Domain.Entities.NeighboorHood", "NeighboorHood")
@@ -639,28 +640,6 @@ namespace Persistance.Migrations
                         .HasForeignKey("LanguageId");
 
                     b.Navigation("Language");
-                });
-
-            modelBuilder.Entity("Domain.Entities.File.AuthorImageFile", b =>
-                {
-                    b.HasOne("Domain.Entities.Author", "Author")
-                        .WithMany("Images")
-                        .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Author");
-                });
-
-            modelBuilder.Entity("Domain.Entities.File.BookImageFile", b =>
-                {
-                    b.HasOne("Domain.Entities.Book", "Book")
-                        .WithMany("Images")
-                        .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Book");
                 });
 
             modelBuilder.Entity("Domain.Entities.Person", b =>
@@ -727,6 +706,28 @@ namespace Persistance.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Entities.File.AuthorImageFile", b =>
+                {
+                    b.HasOne("Domain.Entities.Author", "Author")
+                        .WithMany("Images")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Author");
+                });
+
+            modelBuilder.Entity("Domain.Entities.File.BookImageFile", b =>
+                {
+                    b.HasOne("Domain.Entities.Book", "Book")
+                        .WithMany("Images")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
                 });
 
             modelBuilder.Entity("Domain.Entities.Address", b =>

@@ -7,12 +7,13 @@ using Application.Features.NeighboorHood.Queries.GetAll;
 using Application.Features.NeighboorHood.Queries.GetById;
 using Application.Features.NeighboorHood.Queries.GetSingle;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    
+    [Authorize(AuthenticationSchemes = "Admin")]
     public class NeighboorHoodController : BaseController
     {
         public NeighboorHoodController(IMediator mediator) : base(mediator)

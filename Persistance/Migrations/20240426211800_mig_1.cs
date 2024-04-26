@@ -32,6 +32,8 @@ namespace Persistance.Migrations
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
                     NameSurname = table.Column<string>(type: "text", nullable: false),
+                    RefreshToken = table.Column<string>(type: "text", nullable: true),
+                    RefreshTokenEndDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -241,29 +243,6 @@ namespace Persistance.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AuthorImageFile",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    AuthorId = table.Column<int>(type: "integer", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    FileName = table.Column<string>(type: "text", nullable: false),
-                    Path = table.Column<string>(type: "text", nullable: false),
-                    Storage = table.Column<string>(type: "text", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AuthorImageFile", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AuthorImageFile_Authors_AuthorId",
-                        column: x => x.AuthorId,
-                        principalTable: "Authors",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Catalogs",
                 columns: table => new
                 {
@@ -383,22 +362,30 @@ namespace Persistance.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "BookImageFile",
+                name: "Files",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    BookId = table.Column<int>(type: "integer", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     FileName = table.Column<string>(type: "text", nullable: false),
                     Path = table.Column<string>(type: "text", nullable: false),
-                    Storage = table.Column<string>(type: "text", nullable: false)
+                    Storage = table.Column<string>(type: "text", nullable: false),
+                    Discriminator = table.Column<string>(type: "character varying(21)", maxLength: 21, nullable: false),
+                    AuthorId = table.Column<int>(type: "integer", nullable: true),
+                    BookId = table.Column<int>(type: "integer", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BookImageFile", x => x.Id);
+                    table.PrimaryKey("PK_Files", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BookImageFile_Books_BookId",
+                        name: "FK_Files_Authors_AuthorId",
+                        column: x => x.AuthorId,
+                        principalTable: "Authors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Files_Books_BookId",
                         column: x => x.BookId,
                         principalTable: "Books",
                         principalColumn: "Id",
@@ -448,16 +435,6 @@ namespace Persistance.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_AuthorImageFile_AuthorId",
-                table: "AuthorImageFile",
-                column: "AuthorId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_BookImageFile_BookId",
-                table: "BookImageFile",
-                column: "BookId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Books_AuthorId",
                 table: "Books",
                 column: "AuthorId");
@@ -481,6 +458,16 @@ namespace Persistance.Migrations
                 name: "IX_Catalogs_LanguageId",
                 table: "Catalogs",
                 column: "LanguageId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Files_AuthorId",
+                table: "Files",
+                column: "AuthorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Files_BookId",
+                table: "Files",
+                column: "BookId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Persons_AddressId",
@@ -514,13 +501,10 @@ namespace Persistance.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "AuthorImageFile");
-
-            migrationBuilder.DropTable(
-                name: "BookImageFile");
-
-            migrationBuilder.DropTable(
                 name: "Employees");
+
+            migrationBuilder.DropTable(
+                name: "Files");
 
             migrationBuilder.DropTable(
                 name: "Persons");

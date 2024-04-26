@@ -4,12 +4,13 @@ using Application.Features.Language.Commands.Update;
 using Application.Features.Language.Queries.GetAll;
 using Application.Features.Language.Queries.GetById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-   
+    [Authorize(AuthenticationSchemes = "Admin")]
     public class LanguageController : BaseController
     {
         public LanguageController(IMediator mediator) : base(mediator)

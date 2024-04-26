@@ -1,4 +1,6 @@
-﻿using Application.Repositories;
+﻿using Application.Abstraction.Services;
+using Application.Abstraction.Services.Authentication;
+using Application.Repositories;
 using Application.Repositories.Address;
 using Application.Repositories.Author;
 using Application.Repositories.AuthorImageFile;
@@ -10,6 +12,7 @@ using Application.Repositories.Language;
 using Application.Repositories.NeighboorHood;
 using Application.Repositories.Person;
 using Domain.Entities.Identity;
+using ETicaretAPI.Persistance.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Persistance.EntityFramework.Configurations;
@@ -24,6 +27,7 @@ using Persistance.EntityFramework.Repositories.Employee;
 using Persistance.EntityFramework.Repositories.Language;
 using Persistance.EntityFramework.Repositories.NeighboorHood;
 using Persistance.EntityFramework.Repositories.Person;
+using Persistance.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,7 +45,10 @@ namespace Persistance
 
 
 
-
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IUserService,UserService>();
+            services.AddScoped<IInternalAuthentication,AuthService>();
+            services.AddScoped<IExternalAuthentication, AuthService>();
 
             services.AddScoped<IAuthorImageFileReadRepository, AuthorImageFileReadRepository>();
             services.AddScoped<IAuthorImageFileWriteRepository, AuthorImageFileWriteRepository>();

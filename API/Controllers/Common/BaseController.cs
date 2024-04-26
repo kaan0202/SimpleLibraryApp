@@ -15,7 +15,7 @@ namespace API.Controllers.Common
         {
             _mediator = mediator;
         }
-
+        [NonAction]
         public async Task<IActionResult> NoDataResponse(IRequest<BaseResponse> request)
         {
             BaseResponse response = await _mediator.Send(request);
@@ -24,7 +24,7 @@ namespace API.Controllers.Common
             
             return Ok(response);
         }
-
+        [NonAction]
         public async Task<IActionResult> DataResponse<T>(IRequest<BaseDataResponse<T>> request) where T : class,new()
         {
             BaseDataResponse<T> response = await _mediator.Send(request);

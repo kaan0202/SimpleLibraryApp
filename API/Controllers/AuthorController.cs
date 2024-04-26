@@ -10,12 +10,13 @@ using Application.Features.AuthorImageFile.Commands.Remove;
 using Application.Features.AuthorImageFile.Commands.Upload;
 using Application.Features.AuthorImageFile.Queries.GetAuthorImages;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-
+    [Authorize(AuthenticationSchemes = "Admin")]
     public class AuthorController : BaseController
     {
         public AuthorController(IMediator mediator) : base(mediator)

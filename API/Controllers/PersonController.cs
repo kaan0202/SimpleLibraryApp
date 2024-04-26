@@ -5,12 +5,13 @@ using Application.Features.Person.Queries.GetAll;
 using Application.Features.Person.Queries.GetById;
 using Application.Features.Person.Queries.GetSingle;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    
+    [Authorize(AuthenticationSchemes = "Admin")]
     public class PersonController : BaseController
     {
         public PersonController(IMediator mediator) : base(mediator)

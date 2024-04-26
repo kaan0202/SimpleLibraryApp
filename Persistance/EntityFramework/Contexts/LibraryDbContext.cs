@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Domain.Entities.Common;
+using Domain.Entities.File;
 using Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -30,7 +31,10 @@ namespace Persistance.EntityFramework.Contexts
         public DbSet<Language> Languages { get; set; }
         public DbSet<NeighboorHood> NeighboorHoods { get; set; }
         public DbSet<Person> Persons { get; set; }
+        public DbSet<Domain.Entities.File.File> Files { get; set; }
+        public DbSet<AuthorImageFile> AuthorImageFiles { get; set; }
 
+        public DbSet<BookImageFile> BookImageFiles { get; set; }
 
 
 

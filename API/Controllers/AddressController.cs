@@ -6,12 +6,13 @@ using Application.Features.Address.Queries.GetAll;
 using Application.Features.Address.Queries.GetById;
 using Application.Features.Address.Queries.GetSingle;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-
+    
     public class AddressController : BaseController
     {
         public AddressController(IMediator mediator) : base(mediator)

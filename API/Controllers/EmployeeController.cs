@@ -7,12 +7,13 @@ using Application.Features.Employee.Queries.GetAll;
 using Application.Features.Employee.Queries.GetById;
 using Application.Features.Employee.Queries.GetSingle;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-   
+    [Authorize(AuthenticationSchemes = "Admin")]
     public class EmployeeController : BaseController
     {
         public EmployeeController(IMediator mediator) : base(mediator)

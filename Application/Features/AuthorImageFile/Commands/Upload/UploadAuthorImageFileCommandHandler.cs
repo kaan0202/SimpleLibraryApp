@@ -4,6 +4,7 @@ using Application.Repositories.AuthorImageFile;
 using Domain.Results;
 using Domain.Results.Common;
 using MediatR;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace Application.Features.AuthorImageFile.Commands.Upload
         readonly IAuthorImageFileWriteRepository _authorImageFileWriteRepository;
         readonly IStorageService _storageService;
         readonly IAuthorReadRepository _authorReadRepository;
+       
 
         public UploadAuthorImageFileCommandHandler(IAuthorImageFileReadRepository authorImageFileReadRepository, IAuthorImageFileWriteRepository authorImageFileWriteRepository, IStorageService storageService, IAuthorReadRepository authorReadRepository)
         {
@@ -25,6 +27,7 @@ namespace Application.Features.AuthorImageFile.Commands.Upload
             _authorImageFileWriteRepository = authorImageFileWriteRepository;
             _storageService = storageService;
             _authorReadRepository = authorReadRepository;
+            
         }
 
         public async Task<BaseResponse> Handle(UploadAuthorImageFileCommandRequest request, CancellationToken cancellationToken)
