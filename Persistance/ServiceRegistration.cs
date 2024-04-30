@@ -11,6 +11,7 @@ using Application.Repositories.Employee;
 using Application.Repositories.Language;
 using Application.Repositories.NeighboorHood;
 using Application.Repositories.Person;
+using Application.UnitOfWork;
 using Domain.Entities.Identity;
 using ETicaretAPI.Persistance.Services;
 using Microsoft.EntityFrameworkCore;
@@ -27,6 +28,7 @@ using Persistance.EntityFramework.Repositories.Employee;
 using Persistance.EntityFramework.Repositories.Language;
 using Persistance.EntityFramework.Repositories.NeighboorHood;
 using Persistance.EntityFramework.Repositories.Person;
+using Persistance.EntityFramework.UnitOfWork;
 using Persistance.Services;
 using System;
 using System.Collections.Generic;
@@ -44,7 +46,7 @@ namespace Persistance
             services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<LibraryDbContext>();
 
 
-
+            services.AddScoped<IUnitOfWork,UnitOfWork>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUserService,UserService>();
             services.AddScoped<IInternalAuthentication,AuthService>();
