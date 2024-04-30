@@ -1,4 +1,5 @@
 ﻿using Application.Repositories.NeighboorHood;
+using Application.UnitOfWork;
 using Domain.Results;
 using Domain.Results.Common;
 using MediatR;
@@ -14,10 +15,12 @@ namespace Application.Features.NeighboorHood.Commands.Update
     {
         readonly INeighboorHoodReadRepository _neighboorHoodReadRepository;
         readonly INeighBoorHoodWriteRepository _neighboorHoodWriteRepository;
-        public UpdateNeighboorHoodCommandHandler(INeighboorHoodReadRepository neighboorHoodReadRepository, INeighBoorHoodWriteRepository neighBoorHoodWriteRepository)
+        readonly IUnitOfWork _unitOfWork;
+        public UpdateNeighboorHoodCommandHandler(INeighboorHoodReadRepository neighboorHoodReadRepository, INeighBoorHoodWriteRepository neighBoorHoodWriteRepository, IUnitOfWork unitOfWork)
         {
             _neighboorHoodReadRepository = neighboorHoodReadRepository;
             _neighboorHoodWriteRepository = neighBoorHoodWriteRepository;
+            _unitOfWork = unitOfWork;
         }
         public async Task<BaseResponse> Handle(UpdateNeighboorHoodCommandRequest request, CancellationToken cancellationToken)
         {
@@ -30,6 +33,7 @@ namespace Application.Features.NeighboorHood.Commands.Update
 
                 };
                 _neighboorHoodWriteRepository.Update(neighboorHood);
+                await _unitOfWork.SaveChangesAsync();
                 return new SuccessWithNoDataResponse("Mahalle Güncellendi");
             }
             throw new Exception("Hata");

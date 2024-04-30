@@ -1,4 +1,5 @@
 ﻿using Application.Repositories.Author;
+using Application.UnitOfWork;
 using Domain.Results;
 using Domain.Results.Common;
 using MediatR;
@@ -12,7 +13,7 @@ namespace Application.Features.Author.Commands.Delete
 {
     public class DeleteAuthorCommandHandler : IRequestHandler<DeleteAuthorCommandRequest, BaseResponse>
     {
-
+        readonly IUnitOfWork _unitOfWork;
         readonly IAuthorWriteRepository _authorWriteRepository;
         readonly IAuthorReadRepository _authorReadRepository;
 
@@ -27,6 +28,7 @@ namespace Application.Features.Author.Commands.Delete
             if (result == true)
             {
                 await _authorWriteRepository.RemoveByIdAsync(request.Id);
+                await _unitOfWork.SaveChangesAsync();
                 return new SuccessWithNoDataResponse("Yazar silindi");
             }
             throw new Exception("Hata");

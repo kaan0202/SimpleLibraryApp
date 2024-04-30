@@ -1,5 +1,6 @@
 ﻿using Application.Repositories.Author;
 using Application.Repositories.AuthorImageFile;
+using Application.UnitOfWork;
 using Domain.Results;
 using Domain.Results.Common;
 using MediatR;
@@ -16,11 +17,13 @@ namespace Application.Features.AuthorImageFile.Commands.Remove
     {
         readonly IAuthorReadRepository _authorReadRepository;
         readonly IAuthorWriteRepository _authorWriteRepository;
+        readonly IUnitOfWork _unitOfWork;
 
-        public RemoveAuthorImageFileCommandHandler(IAuthorReadRepository authorReadRepository, IAuthorWriteRepository authorWriteRepository)
+        public RemoveAuthorImageFileCommandHandler(IAuthorReadRepository authorReadRepository, IAuthorWriteRepository authorWriteRepository, IUnitOfWork unitOfWork = null)
         {
             _authorReadRepository = authorReadRepository;
             _authorWriteRepository = authorWriteRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<BaseResponse> Handle(RemoveAuthorImageFileCommandRequest request, CancellationToken cancellationToken)
@@ -30,6 +33,7 @@ namespace Application.Features.AuthorImageFile.Commands.Remove
             if (author != null)
             {
                 author.Images.Remove(authorImageFile);
+                await _unitOfWork.SaveChangesAsync();
 
                 return new SuccessWithNoDataResponse("Resim silindi");
             }

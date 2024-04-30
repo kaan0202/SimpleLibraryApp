@@ -1,4 +1,5 @@
-﻿using Domain.Results;
+﻿using Application.UnitOfWork;
+using Domain.Results;
 using Domain.Results.Common;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -13,10 +14,12 @@ namespace Application.Features.AppUser.CreateUser
     public class CreateUserCommandHandler : IRequestHandler<CreateUserCommandRequest, BaseResponse>
     {
         readonly UserManager<Domain.Entities.Identity.AppUser> _userManager;
+        readonly IUnitOfWork _unitOfWork;
 
-        public CreateUserCommandHandler(UserManager<Domain.Entities.Identity.AppUser> userManager)
+        public CreateUserCommandHandler(UserManager<Domain.Entities.Identity.AppUser> userManager, IUnitOfWork unitOfWork)
         {
             _userManager = userManager;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<BaseResponse> Handle(CreateUserCommandRequest request, CancellationToken cancellationToken)
@@ -34,6 +37,7 @@ namespace Application.Features.AppUser.CreateUser
 
             if (result.Succeeded)
             {
+                await _unitOfWork.SaveChangesAsync();
                 return new SuccessWithNoDataResponse("Kullanıcı oluşturuldu");
             }
             throw new Exception("Hata");

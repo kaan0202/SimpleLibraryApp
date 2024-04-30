@@ -1,4 +1,5 @@
 ﻿using Application.Repositories.Catalog;
+using Application.UnitOfWork;
 using Domain.Results;
 using Domain.Results.Common;
 using MediatR;
@@ -14,10 +15,12 @@ namespace Application.Features.Catalog.Commands.Update
     {
         readonly ICatalogReadRepository _catalogReadRepository;
         readonly ICatalogWriteRepository _catalogWriteRepository;
-        public UpdateCatalogCommandHandler( ICatalogReadRepository catalogReadRepository,ICatalogWriteRepository catalogWriteRepository)
+        readonly IUnitOfWork _unitOfWork;
+        public UpdateCatalogCommandHandler(ICatalogReadRepository catalogReadRepository, ICatalogWriteRepository catalogWriteRepository, IUnitOfWork unitOfWork)
         {
             _catalogReadRepository = catalogReadRepository;
             _catalogWriteRepository = catalogWriteRepository;
+            _unitOfWork = unitOfWork;
         }
         public async Task<BaseResponse> Handle(UpdateCatalogCommandRequest request, CancellationToken cancellationToken)
         {
@@ -31,6 +34,7 @@ namespace Application.Features.Catalog.Commands.Update
 
                 };
                 _catalogWriteRepository.Update(catalog);
+                await _unitOfWork.SaveChangesAsync();
                 return new SuccessWithNoDataResponse("Katalog Güncellendi");
             }
             throw new Exception("Hata");

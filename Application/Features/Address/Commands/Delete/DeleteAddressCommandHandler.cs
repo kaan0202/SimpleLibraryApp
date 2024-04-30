@@ -1,4 +1,5 @@
 ﻿using Application.Repositories.Address;
+using Application.UnitOfWork;
 using Domain.Results;
 using Domain.Results.Common;
 using MediatR;
@@ -14,11 +15,12 @@ namespace Application.Features.Address.Commands.Delete
     {
         readonly IAddressWriteRepository _addressWriteRepository;
         readonly IAddressReadRepository _addressReadRepository;
-        public DeleteAddressCommandHandler(IAddressWriteRepository addressWriteRepository, IAddressReadRepository addressReadRepository)
+        readonly IUnitOfWork _unitOfWork;
+        public DeleteAddressCommandHandler(IAddressWriteRepository addressWriteRepository, IAddressReadRepository addressReadRepository, IUnitOfWork unitOfWork)
         {
             _addressWriteRepository = addressWriteRepository;
             _addressReadRepository = addressReadRepository;
-
+            _unitOfWork = unitOfWork;
         }
         async Task<BaseResponse> IRequestHandler<DeleteAddressCommandRequest, BaseResponse>.Handle(DeleteAddressCommandRequest request, CancellationToken cancellationToken)
         {
@@ -26,6 +28,7 @@ namespace Application.Features.Address.Commands.Delete
             if(result == true)
             {
                 await _addressWriteRepository.RemoveByIdAsync(request.Id);
+                await _unitOfWork.SaveChangesAsync();
                 return new SuccessWithNoDataResponse("Adres Silindi");
             }
             throw new Exception("Hata");

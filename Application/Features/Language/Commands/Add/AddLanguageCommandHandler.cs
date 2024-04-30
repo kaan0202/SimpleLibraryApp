@@ -1,4 +1,5 @@
 ﻿using Application.Repositories.Language;
+using Application.UnitOfWork;
 using Domain.Results;
 using Domain.Results.Common;
 using MediatR;
@@ -13,13 +14,16 @@ namespace Application.Features.Language.Commands.Add
     public class AddLanguageCommandHandler : IRequestHandler<AddLanguageCommandRequest, BaseResponse>
     {
         readonly ILanguageWriteRepository _languageWriteRepository;
-        public AddLanguageCommandHandler(ILanguageWriteRepository languageWriteRepository)
+        readonly IUnitOfWork _unitOfWork;
+        public AddLanguageCommandHandler(ILanguageWriteRepository languageWriteRepository, IUnitOfWork unitOfWork)
         {
             _languageWriteRepository = languageWriteRepository;
+            _unitOfWork = unitOfWork;
         }
         public async Task<BaseResponse> Handle(AddLanguageCommandRequest request, CancellationToken cancellationToken)
         {
             await _languageWriteRepository.AddAsync(request.Language);
+            await _unitOfWork.SaveChangesAsync();
             return new SuccessWithNoDataResponse("Dil eklendi");
         }
     }

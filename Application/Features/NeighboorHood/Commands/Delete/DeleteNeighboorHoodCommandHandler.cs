@@ -1,4 +1,5 @@
 ﻿using Application.Repositories.NeighboorHood;
+using Application.UnitOfWork;
 using Domain.Results;
 using Domain.Results.Common;
 using MediatR;
@@ -14,17 +15,20 @@ namespace Application.Features.NeighboorHood.Commands.Delete
     {
         readonly INeighBoorHoodWriteRepository _neighBoorHoodWriteRepository;
         readonly INeighboorHoodReadRepository _neighboorHoodReadRepository;
-        public DeleteNeighboorHoodCommandHandler(INeighboorHoodReadRepository neighboorHoodReadRepository,INeighBoorHoodWriteRepository neighBoorHoodWriteRepository)
+        readonly IUnitOfWork _unitOfWork;
+        public DeleteNeighboorHoodCommandHandler(INeighboorHoodReadRepository neighboorHoodReadRepository, INeighBoorHoodWriteRepository neighBoorHoodWriteRepository, IUnitOfWork unitOfWork)
         {
             _neighboorHoodReadRepository = neighboorHoodReadRepository;
-            _neighBoorHoodWriteRepository =neighBoorHoodWriteRepository;
+            _neighBoorHoodWriteRepository = neighBoorHoodWriteRepository;
+            _unitOfWork = unitOfWork;
         }
-       public async Task<BaseResponse> Handle(DeleteNeighboorHoodCommandRequest request, CancellationToken cancellationToken)
+        public async Task<BaseResponse> Handle(DeleteNeighboorHoodCommandRequest request, CancellationToken cancellationToken)
         {
             bool result = await _neighboorHoodReadRepository.AnyAsync(data => data.Id == request.Id,false);
             if (result)
             {
                await _neighBoorHoodWriteRepository.RemoveByIdAsync(request.Id);
+                await _unitOfWork.SaveChangesAsync();
                 return new SuccessWithNoDataResponse("Mahalle Silindi");
 
             }

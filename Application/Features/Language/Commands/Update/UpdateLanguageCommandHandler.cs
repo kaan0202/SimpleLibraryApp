@@ -1,4 +1,5 @@
 ﻿using Application.Repositories.Language;
+using Application.UnitOfWork;
 using Domain.Results;
 using Domain.Results.Common;
 using MediatR;
@@ -14,10 +15,12 @@ namespace Application.Features.Language.Commands.Update
     {
         readonly ILanguageReadRepository _languageReadRepository;
         readonly ILanguageWriteRepository _languageWriteRepository;
-        public UpdateLanguageCommandHandler(ILanguageWriteRepository languageWriteRepository, ILanguageReadRepository languageReadRepository)
+        readonly IUnitOfWork _unitOfWork;
+        public UpdateLanguageCommandHandler(ILanguageWriteRepository languageWriteRepository, ILanguageReadRepository languageReadRepository, IUnitOfWork unitOfWork)
         {
             _languageReadRepository = languageReadRepository;
             _languageWriteRepository = languageWriteRepository;
+            _unitOfWork = unitOfWork;
         }
         public async Task<BaseResponse> Handle(UpdateLanguageCommandRequest request, CancellationToken cancellationToken)
         {
@@ -30,6 +33,7 @@ namespace Application.Features.Language.Commands.Update
                     Name = request.Name,
                 };
                 _languageWriteRepository.Update(language);
+                await _unitOfWork.SaveChangesAsync();
                 return new SuccessWithNoDataResponse("Dil Güncellendi");
             }
             throw new Exception("Hata");

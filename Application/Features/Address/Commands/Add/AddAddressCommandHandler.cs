@@ -1,4 +1,5 @@
 ﻿using Application.Repositories.Address;
+using Application.UnitOfWork;
 using Domain.Results;
 using Domain.Results.Common;
 using MediatR;
@@ -12,15 +13,19 @@ namespace Application.Features.Address.Commands.Add
 {
     public class AddAddressCommandHandler : IRequestHandler<AddAddressCommandRequest, BaseResponse>
     {
+        readonly IUnitOfWork _unitOfWork;
         readonly IAddressWriteRepository _addressWriteRepository;
-        public AddAddressCommandHandler(IAddressWriteRepository addressWriteRepository)
+        public AddAddressCommandHandler(IAddressWriteRepository addressWriteRepository, IUnitOfWork unitOfWork)
         {
-            _addressWriteRepository = addressWriteRepository;  
+            _addressWriteRepository = addressWriteRepository;
+            _unitOfWork = unitOfWork;
         }
         public async Task<BaseResponse> Handle(AddAddressCommandRequest request, CancellationToken cancellationToken)
         {
             await _addressWriteRepository.AddAsync(request.Address);
+           await _unitOfWork.SaveChangesAsync();
             return new SuccessWithNoDataResponse("Adres Eklendi");
+
            
         }
     }

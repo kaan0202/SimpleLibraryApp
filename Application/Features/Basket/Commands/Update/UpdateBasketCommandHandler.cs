@@ -1,4 +1,5 @@
 ﻿using Application.Repositories.Basket;
+using Application.UnitOfWork;
 using Domain.Results;
 using Domain.Results.Common;
 using MediatR;
@@ -14,11 +15,13 @@ namespace Application.Features.Basket.Commands.Update
     { 
         readonly IBasketWriteRepository _basketWriteRepository;
         readonly IBasketReadRepository _basketReadRepository;
+        readonly IUnitOfWork _unitOfWork;
 
-        public UpdateBasketCommandHandler(IBasketWriteRepository basketWriteRepository,IBasketReadRepository basketReadRepository)
+        public UpdateBasketCommandHandler(IBasketWriteRepository basketWriteRepository, IBasketReadRepository basketReadRepository, IUnitOfWork unitOfWork)
         {
             _basketWriteRepository = basketWriteRepository;
             _basketReadRepository = basketReadRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<BaseResponse> Handle(UpdateBasketCommandRequest request, CancellationToken cancellationToken)
@@ -32,6 +35,7 @@ namespace Application.Features.Basket.Commands.Update
 
                 };
                 _basketWriteRepository.Update(basket);
+                await _unitOfWork.SaveChangesAsync();
                 return new SuccessWithNoDataResponse("Sepet Güncellendi");
             }
             throw new Exception("Hata");

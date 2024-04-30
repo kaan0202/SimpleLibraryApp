@@ -1,4 +1,5 @@
 ﻿using Application.Repositories.Address;
+using Application.UnitOfWork;
 using Domain.Results;
 using Domain.Results.Common;
 using MediatR;
@@ -14,10 +15,12 @@ namespace Application.Features.Address.Commands.Update
     {
         readonly IAddressReadRepository _addressReadRepository;
         readonly IAddressWriteRepository _addressWriteRepository;
-        public UpdateAddressCommandHandler(IAddressReadRepository addressReadRepository,IAddressWriteRepository addressWriteRepository)
+        readonly IUnitOfWork _unitOfWork;
+        public UpdateAddressCommandHandler(IAddressReadRepository addressReadRepository, IAddressWriteRepository addressWriteRepository, IUnitOfWork unitOfWork)
         {
             _addressReadRepository = addressReadRepository;
             _addressWriteRepository = addressWriteRepository;
+            _unitOfWork = unitOfWork;
         }
         async Task<BaseResponse> IRequestHandler<UpdateAddressCommandRequest, BaseResponse>.Handle(UpdateAddressCommandRequest request, CancellationToken cancellationToken)
         {
@@ -36,6 +39,7 @@ namespace Application.Features.Address.Commands.Update
                 };
 
                 _addressWriteRepository.Update(address);
+                await _unitOfWork.SaveChangesAsync();
                 return new SuccessWithNoDataResponse("Adres Güncellendi");
             }
             throw new Exception("Hata");

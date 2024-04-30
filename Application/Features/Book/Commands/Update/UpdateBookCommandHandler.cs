@@ -1,4 +1,5 @@
 ﻿using Application.Repositories.Book;
+using Application.UnitOfWork;
 using Domain.Results;
 using Domain.Results.Common;
 using MediatR;
@@ -14,10 +15,12 @@ namespace Application.Features.Book.Commands.Update
     {
         readonly IBookReadRepository _bookReadRepository;
         readonly IBookWriteRepository _bookWriteRepository;
-        public UpdateBookCommandHandler(IBookReadRepository bookReadRepository, IBookWriteRepository bookWriteRepository)
+        readonly IUnitOfWork _unitOfWork;
+        public UpdateBookCommandHandler(IBookReadRepository bookReadRepository, IBookWriteRepository bookWriteRepository, IUnitOfWork unitOfWork)
         {
             _bookReadRepository = bookReadRepository;
             _bookWriteRepository = bookWriteRepository;
+            _unitOfWork = unitOfWork;
         }
         public async Task<BaseResponse> Handle(UpdateBookCommandRequest request, CancellationToken cancellationToken)
         {
@@ -36,6 +39,7 @@ namespace Application.Features.Book.Commands.Update
 
                 };
                 _bookWriteRepository.Update(book);
+                await _unitOfWork.SaveChangesAsync();
                 return new SuccessWithNoDataResponse("Kitap Güncellendi");
             }
             throw new Exception("Hata");
