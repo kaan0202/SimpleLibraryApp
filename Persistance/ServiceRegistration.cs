@@ -6,6 +6,7 @@ using Application.Repositories.Author;
 using Application.Repositories.AuthorImageFile;
 using Application.Repositories.Basket;
 using Application.Repositories.Book;
+using Application.Repositories.BookImageFile;
 using Application.Repositories.Catalog;
 using Application.Repositories.Employee;
 using Application.Repositories.Language;
@@ -23,6 +24,7 @@ using Persistance.EntityFramework.Repositories.Author;
 using Persistance.EntityFramework.Repositories.AuthorImageFile;
 using Persistance.EntityFramework.Repositories.Basket;
 using Persistance.EntityFramework.Repositories.Book;
+using Persistance.EntityFramework.Repositories.BookImageFile;
 using Persistance.EntityFramework.Repositories.Catalog;
 using Persistance.EntityFramework.Repositories.Employee;
 using Persistance.EntityFramework.Repositories.Language;
@@ -51,6 +53,13 @@ namespace Persistance
             services.AddScoped<IUserService,UserService>();
             services.AddScoped<IInternalAuthentication,AuthService>();
             services.AddScoped<IExternalAuthentication, AuthService>();
+
+
+            services.AddScoped<IBookReadRepository, BookReadRepository>();
+            services.AddScoped<IBookWriteRepository, BookWriteRepository>();
+
+            services.AddScoped<IBookImageFileReadRepository,BookImageFileReadRepository>();
+            services.AddScoped<IBookImageFileWriteRepository,BookImageFileWriteRepository>();
 
             services.AddScoped<IAuthorImageFileReadRepository, AuthorImageFileReadRepository>();
             services.AddScoped<IAuthorImageFileWriteRepository, AuthorImageFileWriteRepository>();
