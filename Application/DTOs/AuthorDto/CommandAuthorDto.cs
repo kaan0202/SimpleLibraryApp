@@ -4,16 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.DTOs.EmployeeDto
+namespace Application.DTOs.AuthorDto
 {
-    public class QueryEmployeeDto
+    public class CommandAuthorDto
     {
-       
         public int Id { get; set; }
         public string Name { get; set; }
+        public DateTime BirthDay { get; set; }
         public string Surname { get; set; }
-        public int Salary { get; set; }
-        public bool? Status { get; set; }
-        public string Gender { get; set; }
     }
 }

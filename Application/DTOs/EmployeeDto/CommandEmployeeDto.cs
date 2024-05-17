@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Application.DTOs.EmployeeDto
 {
-    public class QueryEmployeeDto
+    public class CommandEmployeeDto
     {
-       
         public int Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
