@@ -24,17 +24,17 @@ namespace Application.Features.Person.Commands.Update
         }
         public async Task<BaseResponse> Handle(UpdatePersonCommandRequest request, CancellationToken cancellationToken)
         {
-            bool result = await _personReadRepository.AnyAsync(data => data.Id == request.Id, false);
+            bool result = await _personReadRepository.AnyAsync(data => data.Id == request.PersonDto.Id, false);
             if (result)
             {
                 Domain.Entities.Person person = new()
                 {
-                    Name = request.Name,
-                    AddressId = request.AddressId,
-                    BirthDay = request.BirthDay,
-                    Email = request.Email,
-                    Password = request.Password,
-                    Surname = request.Surname,
+                    Name = request.PersonDto.Name,
+                    AddressId = request.PersonDto.AddressId,
+                    BirthDay = request.PersonDto.BirthDay,
+                    Email = request.PersonDto.Email,
+                    Password = request.PersonDto.Password,
+                    Surname = request.PersonDto.Surname,
 
 
                 };

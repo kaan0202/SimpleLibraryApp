@@ -11,10 +11,10 @@ namespace Application.Features.Author.Commands.Update
     {
         public ValidatorSettings()
         {
-            RuleFor(x => x.Id).NotEmpty().GreaterThan(0);
-            RuleFor(x => x.Name).NotEmpty().NotEqual(x =>x.Surname).Length(2,25);
-            RuleFor(x => x.Surname).NotEmpty().NotEqual(x=>x.Name).Length(2,50);
-            RuleFor(x => x.BirthDay).NotEmpty();
+            RuleFor(x => x.AuthorDto.Id).NotEmpty().GreaterThan(0);
+            RuleFor(x => x.AuthorDto.Name).NotEmpty().NotEqual(x =>x.AuthorDto.Surname).Length(2,25);
+            RuleFor(x => x.AuthorDto.Surname).NotEmpty().NotEqual(x=>x.AuthorDto.Name).Length(2,50);
+            RuleFor(x => x.AuthorDto.BirthDay).NotEmpty();
         }
     }
 }

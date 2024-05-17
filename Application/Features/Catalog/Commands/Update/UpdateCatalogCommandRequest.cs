@@ -1,4 +1,5 @@
-﻿using Domain.Results.Common;
+﻿using Application.DTOs.CatalogDto;
+using Domain.Results.Common;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -10,8 +11,6 @@ namespace Application.Features.Catalog.Commands.Update
 {
     public class UpdateCatalogCommandRequest:IRequest<BaseResponse>
     {
-        public int Id { get; set; }
-        public string CatalogName { get; set; }
-        public int LanguageId { get; set; }
+        public CommandCatalogDto  CatalogDto { get; set; }
     }
 }

@@ -25,14 +25,14 @@ namespace Application.Features.Author.Commands.Update
 
         public async Task<BaseResponse> Handle(UpdateAuthorCommandRequest request, CancellationToken cancellationToken)
         {
-            bool result = await _authorReadRepository.AnyAsync(data => data.Id == request.Id,false);
+            bool result = await _authorReadRepository.AnyAsync(data => data.Id == request.AuthorDto.Id,false);
             if (result==true)
             {
                 Domain.Entities.Author author = new()
                 {
-                    BirthDay = request.BirthDay,
-                    Name = request.Name,
-                    Surname = request.Surname,
+                    BirthDay = request.AuthorDto.BirthDay,
+                    Name = request.AuthorDto.Name,
+                    Surname = request.AuthorDto.Surname,
 
                 };
                  _authorWriteRepository.Update(author);

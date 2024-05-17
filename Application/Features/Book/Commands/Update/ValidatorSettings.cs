@@ -11,13 +11,13 @@ namespace Application.Features.Book.Commands.Update
     {
         public ValidatorSettings()
         {
-            RuleFor(x => x.Id).NotEmpty().GreaterThan(0);
-            RuleFor(x => x.AuthorId).NotEmpty().GreaterThan(0);
-            RuleFor(x => x.CatalogId).NotEmpty().GreaterThan(0);
-            RuleFor(x=>x.BasketId).GreaterThan(0);
-            RuleFor(x => x.LanguageId).NotEmpty().GreaterThan(0);
-            RuleFor(x => x.Name).NotNull().NotEmpty();
-            RuleFor(x=>x.PageOfNumber).NotEmpty().GreaterThan(0);
+            RuleFor(x => x.BookDto.Id).NotEmpty().GreaterThan(0);
+            RuleFor(x => x.BookDto.AuthorId).NotEmpty().GreaterThan(0);
+            RuleFor(x => x.BookDto.CatalogId).NotEmpty().GreaterThan(0);
+            RuleFor(x=>x.BookDto.BasketId).GreaterThan(0);
+            RuleFor(x => x.BookDto.LanguageId).NotEmpty().GreaterThan(0);
+            RuleFor(x => x.BookDto.Name).NotNull().NotEmpty();
+            RuleFor(x=>x.BookDto.PageOfNumber).NotEmpty().GreaterThan(0);
         }
 
     }

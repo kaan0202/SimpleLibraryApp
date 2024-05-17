@@ -1,4 +1,5 @@
-﻿using Domain.Results.Common;
+﻿using Application.DTOs.BookDto;
+using Domain.Results.Common;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -10,12 +11,6 @@ namespace Application.Features.Book.Commands.Update
 {
     public class UpdateBookCommandRequest:IRequest<BaseResponse>
     {
-        public int Id { get; set; }
-        public int LanguageId { get; set; }
-        public int BasketId { get; set; }
-        public int CatalogId { get; set; }
-        public string Name { get; set; }
-        public int AuthorId { get; set; }
-        public int PageOfNumber { get; set; }
+        public CommandBookDto  BookDto { get; set; }
     }
 }

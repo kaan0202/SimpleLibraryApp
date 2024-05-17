@@ -22,7 +22,11 @@ namespace Application.Features.NeighboorHood.Commands.Add
         }
         public async Task<BaseResponse> Handle(AddNeighboorHoodCommandRequest request, CancellationToken cancellationToken)
         {
-            await _neighBoorHoodWriteRepository.AddAsync(request.NeighboorHood);
+            Domain.Entities.NeighboorHood neighboorHood = new()
+            {
+                Name = request.CommandDto.Name
+            };
+            await _neighBoorHoodWriteRepository.AddAsync(neighboorHood);
             await _unitOfWork.SaveChangesAsync();
             return new SuccessWithNoDataResponse("Mahalle eklendi");
         }

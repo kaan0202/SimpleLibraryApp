@@ -1,4 +1,5 @@
-﻿using Domain.Results.Common;
+﻿using Application.DTOs.NeighboorHoodDto;
+using Domain.Results.Common;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ namespace Application.Features.NeighboorHood.Commands.Add
 {
     public class AddNeighboorHoodCommandRequest:IRequest<BaseResponse>
     {
-        public Domain.Entities.NeighboorHood NeighboorHood { get; set; }
+
+        public CommandNeighboorHoodDto CommandDto { get; set; }
     }
 }

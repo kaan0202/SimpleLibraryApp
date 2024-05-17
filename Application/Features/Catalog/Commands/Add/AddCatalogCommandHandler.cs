@@ -22,7 +22,13 @@ namespace Application.Features.Catalog.Commands.Add
         }
         public async Task<BaseResponse> Handle(AddCatalogCommandRequest request, CancellationToken cancellationToken)
         {
-            await _catalogWriteRepository.AddAsync(request.Catalog);
+            Domain.Entities.Catalog catalog = new()
+            {
+                LanguageId = request.CatalogDto.LanguageId,
+                CatalogName = request.CatalogDto.CatalogName,
+
+            };
+            await _catalogWriteRepository.AddAsync(catalog);
             await _unitOfWork.SaveChangesAsync();
             return new SuccessWithNoDataResponse("Katalog Eklendi");
         }

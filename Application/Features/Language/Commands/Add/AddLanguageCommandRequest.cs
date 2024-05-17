@@ -1,4 +1,5 @@
-﻿using Domain.Results.Common;
+﻿using Application.DTOs.LanguageDto;
+using Domain.Results.Common;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,6 @@ namespace Application.Features.Language.Commands.Add
 {
     public class AddLanguageCommandRequest:IRequest<BaseResponse>
     {
-        public Domain.Entities.Language Language { get; set; }
+        public CommandLanguageDto Language { get; set; }
     }
 }

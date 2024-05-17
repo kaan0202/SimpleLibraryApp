@@ -11,7 +11,7 @@ namespace Application.Features.Language.Commands.Add
     {
         public ValidatorSettings()
         {
-            RuleFor(x =>x.Language.Id).NotEmpty().GreaterThan(0);
+            
             RuleFor(x => x.Language.Name).NotEmpty().MaximumLength(30);
 
         }

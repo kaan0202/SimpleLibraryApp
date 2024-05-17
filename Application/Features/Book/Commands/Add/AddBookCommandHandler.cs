@@ -24,8 +24,17 @@ namespace Application.Features.Book.Commands.Add
 
         public async Task<BaseResponse> Handle(AddBookCommandRequest request, CancellationToken cancellationToken)
         {
+            Domain.Entities.Book book = new()
+            {
+                AuthorId = request.BookDto.AuthorId,
+                CatalogId = request.BookDto.CatalogId,
+                LanguageId = request.BookDto.LanguageId,
+                Name = request.BookDto.Name,
+                PageOfNumber = request.BookDto.PageOfNumber,
+                
+            };
 
-            await _bookWriteRepository.AddAsync(request.Book);
+            await _bookWriteRepository.AddAsync(book);
             await _unitOfWork.SaveChangesAsync();
             return new SuccessWithNoDataResponse("Kitap Eklendi");
         }

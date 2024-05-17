@@ -22,7 +22,17 @@ namespace Application.Features.Person.Commands.Add
         }
         public async Task<BaseResponse> Handle(AddPersonCommandRequest request, CancellationToken cancellationToken)
         {
-            await _personWriteRepository.AddAsync(request.Person);
+            Domain.Entities.Person person = new()
+            {
+                Name = request.PersonDto.Name,
+                AddressId = request.PersonDto.AddressId,
+                BirthDay = request.PersonDto.BirthDay,
+                 Email = request.PersonDto.Email,
+                 Password = request.PersonDto.Password,
+                 Surname = request.PersonDto.Surname,
+                 
+            };
+            await _personWriteRepository.AddAsync(person);
             await _unitOfWork.SaveChangesAsync();
             return new SuccessWithNoDataResponse("Kullanıcı eklendi");
         }

@@ -24,13 +24,13 @@ namespace Application.Features.Catalog.Commands.Update
         }
         public async Task<BaseResponse> Handle(UpdateCatalogCommandRequest request, CancellationToken cancellationToken)
         {
-            bool result = await _catalogReadRepository.AnyAsync(data => data.Id == request.Id,false);
+            bool result = await _catalogReadRepository.AnyAsync(data => data.Id == request.CatalogDto.Id,false);
             if(result == true)
             {
                 Domain.Entities.Catalog catalog = new()
                 {
-                    CatalogName = request.CatalogName,
-                    LanguageId = request.LanguageId,
+                    CatalogName = request.CatalogDto.CatalogName,
+                    LanguageId = request.CatalogDto.LanguageId,
 
                 };
                 _catalogWriteRepository.Update(catalog);

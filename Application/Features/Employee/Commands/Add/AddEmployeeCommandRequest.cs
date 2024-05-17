@@ -1,4 +1,5 @@
-﻿using Domain.Results.Common;
+﻿using Application.DTOs.EmployeeDto;
+using Domain.Results.Common;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,6 @@ namespace Application.Features.Employee.Commands.Add
 {
     public class AddEmployeeCommandRequest:IRequest<BaseResponse>
     {
-        public Domain.Entities.Employee Employee { get; set; }
+        public CommandEmployeeDto EmployeeDto { get; set; }
     }
 }

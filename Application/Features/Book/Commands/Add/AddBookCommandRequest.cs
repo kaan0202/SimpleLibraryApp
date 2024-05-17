@@ -1,4 +1,5 @@
-﻿using Domain.Results.Common;
+﻿using Application.DTOs.BookDto;
+using Domain.Results.Common;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,6 @@ namespace Application.Features.Book.Commands.Add
 {
     public class AddBookCommandRequest:IRequest<BaseResponse>
     {
-        public Domain.Entities.Book Book { get; set; }
+        public CommandBookDto  BookDto { get; set; }
     }
 }

@@ -24,7 +24,14 @@ namespace Application.Features.Author.Commands.Add
 
         public async Task<BaseResponse> Handle(AddAuthorCommandRequest request, CancellationToken cancellationToken)
         {
-           var author = await _repository.AddAsync(request.Author);
+            Domain.Entities.Author authorData = new()
+            {
+                Name = request.Author.Name,
+                Surname = request.Author.Surname,
+                BirthDay = request.Author.BirthDay,
+                
+            };
+           var author = await _repository.AddAsync(authorData);
             await _unitOfWork.SaveChangesAsync();
             return new SuccessWithNoDataResponse("Yazar Eklendi");
         }

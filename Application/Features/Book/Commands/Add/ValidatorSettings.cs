@@ -11,12 +11,12 @@ namespace Application.Features.Book.Commands.Add
     {
         public ValidatorSettings()
         {
-            RuleFor(x => x.Book.Id).NotEmpty().GreaterThan(0);
-            RuleFor(x => x.Book.Name).NotEmpty().MaximumLength(50);
-            RuleFor(x => x.Book.CatalogId).NotEmpty().GreaterThan(0);
-            RuleFor(x => x.Book.PageOfNumber).NotEmpty().GreaterThan(0);
-            RuleFor(x => x.Book.LanguageId).NotEmpty().GreaterThan(0);
-            RuleFor(x => x.Book.AuthorId).NotEmpty().GreaterThan(0);
+            RuleFor(x => x.BookDto.Id).NotEmpty().GreaterThan(0);
+            RuleFor(x => x.BookDto.Name).NotEmpty().MaximumLength(50);
+            RuleFor(x => x.BookDto.CatalogId).NotEmpty().GreaterThan(0);
+            RuleFor(x => x.BookDto.PageOfNumber).NotEmpty().GreaterThan(0);
+            RuleFor(x => x.BookDto.LanguageId).NotEmpty().GreaterThan(0);
+            RuleFor(x => x.BookDto.AuthorId).NotEmpty().GreaterThan(0);
             
         }
     }

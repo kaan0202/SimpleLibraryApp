@@ -33,7 +33,7 @@ namespace Application.Features.Book.Queries.GetAll
                 queryBookDto.Name = book.Name;
                 queryBookDto.Author = new()
                 {
-                    
+                    Id = book.Author.Id,
                     Name = book.Author.Name,
                     BirthDay = book.Author.BirthDay,
                     Surname = book.Author.Surname,
@@ -42,13 +42,13 @@ namespace Application.Features.Book.Queries.GetAll
                 };
                 queryBookDto.Catalog = new()
                 {
-                    
+                    Id = book.Catalog.Id,
                     CatalogName = book.Catalog.CatalogName,
 
                 };
                 queryBookDto.Language = new()
                 {
-                    
+                    Id = book.Language.Id,
                     Name = book.Language.Name,
                 };
                 queryBookDtos.Add(queryBookDto);

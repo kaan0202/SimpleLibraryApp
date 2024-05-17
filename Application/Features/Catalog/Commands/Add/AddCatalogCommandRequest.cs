@@ -1,4 +1,5 @@
-﻿using Domain.Results.Common;
+﻿using Application.DTOs.CatalogDto;
+using Domain.Results.Common;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,6 @@ namespace Application.Features.Catalog.Commands.Add
 {
     public class AddCatalogCommandRequest:IRequest<BaseResponse>
     {
-        public Domain.Entities.Catalog Catalog { get; set; }
+        public CommandCatalogDto CatalogDto { get; set; }
     }
 }

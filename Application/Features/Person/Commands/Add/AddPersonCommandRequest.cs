@@ -1,4 +1,5 @@
-﻿using Domain.Results.Common;
+﻿using Application.DTOs.PersonDto;
+using Domain.Results.Common;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,6 @@ namespace Application.Features.Person.Commands.Add
 {
     public class AddPersonCommandRequest:IRequest<BaseResponse>
     {
-        public Domain.Entities.Person Person { get; set; }
+        public CommandPersonDto PersonDto { get; set; }
     }
 }

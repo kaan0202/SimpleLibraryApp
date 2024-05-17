@@ -22,7 +22,11 @@ namespace Application.Features.Language.Commands.Add
         }
         public async Task<BaseResponse> Handle(AddLanguageCommandRequest request, CancellationToken cancellationToken)
         {
-            await _languageWriteRepository.AddAsync(request.Language);
+            Domain.Entities.Language language = new()
+            {
+                Name = request.Language.Name,
+            };
+            await _languageWriteRepository.AddAsync(language);
             await _unitOfWork.SaveChangesAsync();
             return new SuccessWithNoDataResponse("Dil eklendi");
         }

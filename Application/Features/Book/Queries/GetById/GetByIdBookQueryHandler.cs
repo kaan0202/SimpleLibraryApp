@@ -30,7 +30,7 @@ namespace Application.Features.Book.Queries.GetById
                 QueryBookDto queryBookDto =new();
                 queryBookDto.Author = new()
                 {
-                    Id = book.AuthorId,
+                    Id = book.Author.Id,
                     BirthDay = book.Author.BirthDay,
                     Name = book.Author.Name,
                     Surname = book.Author.Surname

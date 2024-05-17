@@ -1,4 +1,5 @@
-﻿using Domain.Results.Common;
+﻿using Application.DTOs.EmployeeDto;
+using Domain.Results.Common;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -10,11 +11,6 @@ namespace Application.Features.Employee.Commands.Update
 {
     public class UpdateEmployeeCommandRequest:IRequest<BaseResponse>
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Surname { get; set; }
-        public int Salary { get; set; }
-        public bool Status { get; set; }
-        public string Gender { get; set; }
+        public CommandEmployeeDto EmployeeDto { get; set; }
     }
 }

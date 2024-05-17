@@ -21,7 +21,16 @@ namespace Application.Features.Employee.Commands.Add
         }
         public async Task<BaseResponse> Handle(AddEmployeeCommandRequest request, CancellationToken cancellationToken)
         {
-            await _employeeWriteRepository.AddAsync(request.Employee);
+            Domain.Entities.Employee employee = new()
+            {
+                 Gender = request.EmployeeDto.Gender,
+                 Name = request.EmployeeDto.Name,
+                 Salary = request.EmployeeDto.Salary,
+                 Status = request.EmployeeDto.Status,
+                 Surname = request.EmployeeDto.Surname,
+                 
+            };
+            await _employeeWriteRepository.AddAsync(employee);
             await _unitOfWork.SaveChangesAsync();
             return new SuccessWithNoDataResponse("Çalışan Eklendi");
         }

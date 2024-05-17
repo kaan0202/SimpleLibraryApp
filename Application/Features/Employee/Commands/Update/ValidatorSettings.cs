@@ -11,11 +11,11 @@ namespace Application.Features.Employee.Commands.Update
     {
         public ValidatorSettings()
         {
-            RuleFor(x => x.Id).NotEmpty().GreaterThan(0);
-            RuleFor(x => x.Name).NotEmpty().NotEqual(x=>x.Surname);
-            RuleFor(x=>x.Salary).NotEmpty().GreaterThan(0);
-            RuleFor(x => x.Surname).NotEmpty().NotEqual(x=>x.Name);
-            RuleFor(x => x.Gender).NotEmpty();
+            RuleFor(x => x.EmployeeDto.Id).NotEmpty().GreaterThan(0);
+            RuleFor(x => x.EmployeeDto.Name).NotEmpty().NotEqual(x=>x.EmployeeDto.Surname);
+            RuleFor(x=>x.EmployeeDto.Salary).NotEmpty().GreaterThan(0);
+            RuleFor(x => x.EmployeeDto.Surname).NotEmpty().NotEqual(x=>x.EmployeeDto.Name);
+            RuleFor(x => x.EmployeeDto.Gender).NotEmpty();
 
             //1.30  
 

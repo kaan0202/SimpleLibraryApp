@@ -1,4 +1,5 @@
-﻿using Domain.Results.Common;
+﻿using Application.DTOs.AuthorDto;
+using Domain.Results.Common;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,6 @@ namespace Application.Features.Author.Commands.Add
 {
     public class AddAuthorCommandRequest:IRequest<BaseResponse>
     {
-        public Domain.Entities.Author Author { get; set; }
+        public CommandAuthorDto Author { get; set; }
     }
 }

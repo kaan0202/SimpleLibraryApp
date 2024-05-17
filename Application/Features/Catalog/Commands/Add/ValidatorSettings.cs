@@ -11,9 +11,9 @@ namespace Application.Features.Catalog.Commands.Add
     {
         public ValidatorSettings()
         {
-            RuleFor(x => x.Catalog.Id).NotEmpty().GreaterThan(0);
-            RuleFor(x => x.Catalog.CatalogName).NotEmpty().MaximumLength(65);
-            RuleFor(x => x.Catalog.LanguageId).NotEmpty().GreaterThan(0);
+            RuleFor(x => x.CatalogDto.Id).NotEmpty().GreaterThan(0);
+            RuleFor(x => x.CatalogDto.CatalogName).NotEmpty().MaximumLength(65);
+            RuleFor(x => x.CatalogDto.LanguageId).NotEmpty().GreaterThan(0);
         }
     }
 }

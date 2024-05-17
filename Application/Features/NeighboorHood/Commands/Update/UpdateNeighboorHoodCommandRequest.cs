@@ -1,4 +1,5 @@
-﻿using Domain.Results.Common;
+﻿using Application.DTOs.NeighboorHoodDto;
+using Domain.Results.Common;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,6 @@ namespace Application.Features.NeighboorHood.Commands.Update
 {
     public class UpdateNeighboorHoodCommandRequest : IRequest<BaseResponse>
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+        public CommandNeighboorHoodDto NeighboorHoodDto { get; set; }
     }
 }

@@ -11,10 +11,10 @@ namespace Application.Features.Employee.Commands.Add
     {
         public ValidatorSettings()
         {
-            RuleFor(x=>x.Employee.Id).NotEmpty().GreaterThan(0);
-            RuleFor(x => x.Employee.Name).NotEmpty().NotEqual(x => x.Employee.Surname).NotEqual(x => x.Employee.Gender).MaximumLength(35);
-            RuleFor(x => x.Employee.Surname).NotEmpty().NotEqual(x => x.Employee.Name).NotEqual(x => x.Employee.Gender).MaximumLength(50);
-            RuleFor(x => x.Employee.Gender).NotEmpty().NotEqual(x => x.Employee.Surname).NotEqual(x => x.Employee.Name).MaximumLength(60);
+            RuleFor(x=>x.EmployeeDto.Id).NotEmpty().GreaterThan(0);
+            RuleFor(x => x.EmployeeDto.Name).NotEmpty().NotEqual(x => x.EmployeeDto.Surname).NotEqual(x => x.EmployeeDto.Gender).MaximumLength(35);
+            RuleFor(x => x.EmployeeDto.Surname).NotEmpty().NotEqual(x => x.EmployeeDto.Name).NotEqual(x => x.EmployeeDto.Gender).MaximumLength(50);
+            RuleFor(x => x.EmployeeDto.Gender).NotEmpty().NotEqual(x => x.EmployeeDto.Surname).NotEqual(x => x.EmployeeDto.Name).MaximumLength(60);
         }
     }
 }

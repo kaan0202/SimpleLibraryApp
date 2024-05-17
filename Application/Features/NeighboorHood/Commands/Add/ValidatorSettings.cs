@@ -11,8 +11,8 @@ namespace Application.Features.NeighboorHood.Commands.Add
     {
         public ValidatorSettings()
         {
-            RuleFor(x => x.NeighboorHood.Id).NotEmpty().GreaterThan(0);
-            RuleFor(x => x.NeighboorHood.Name).NotEmpty().MaximumLength(60);
+            RuleFor(x => x.CommandDto.Id).NotEmpty().GreaterThan(0);
+            RuleFor(x => x.CommandDto.Name).NotEmpty().MaximumLength(60);
             
         }
     }

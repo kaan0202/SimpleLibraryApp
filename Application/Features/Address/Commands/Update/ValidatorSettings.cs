@@ -14,12 +14,12 @@ namespace Application.Features.Address.Commands.Update
         public ValidatorSettings()
         {
 
-            RuleFor(x => x.Id).NotEmpty().NotNull().GreaterThan(0);
-            RuleFor(x => x.PhoneNumber).NotEmpty().NotNull().MaximumLength(10);
-            RuleFor(x =>x.PersonId).NotEmpty().NotNull().GreaterThan(0);
-           RuleFor(x => x.OpenAddress).NotEmpty().NotNull();
-            RuleFor(x =>x.Description).NotEmpty().NotNull();
-            RuleFor(x =>x.AddressTitle).NotEmpty().NotNull();
+            RuleFor(x => x.Address.Id).NotEmpty().NotNull().GreaterThan(0);
+            RuleFor(x => x.Address.PhoneNumber).NotEmpty().NotNull().MaximumLength(10);
+            RuleFor(x =>x.Address.PersonId).NotEmpty().NotNull().GreaterThan(0);
+           RuleFor(x => x.Address.OpenAddress).NotEmpty().NotNull();
+            RuleFor(x =>x.Address.Description).NotEmpty().NotNull();
+            RuleFor(x =>x.Address.AddressTitle).NotEmpty().NotNull();
 
 
            

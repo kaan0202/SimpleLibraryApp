@@ -22,7 +22,17 @@ namespace Application.Features.Address.Commands.Add
         }
         public async Task<BaseResponse> Handle(AddAddressCommandRequest request, CancellationToken cancellationToken)
         {
-            await _addressWriteRepository.AddAsync(request.Address);
+            Domain.Entities.Address address = new()
+            {
+                
+                AddressTitle = request.Address.AddressTitle,
+                CreatedDate = DateTime.UtcNow,
+                Description = request.Address.Description,
+                NeighboorHoodId = request.Address.NeighboorHoodId,
+                PhoneNumber = request.Address.PhoneNumber,
+                PersonId = request.Address.PersonId,
+            };
+            await _addressWriteRepository.AddAsync(address);
            await _unitOfWork.SaveChangesAsync();
             return new SuccessWithNoDataResponse("Adres Eklendi");
 

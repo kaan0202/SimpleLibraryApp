@@ -24,12 +24,12 @@ namespace Application.Features.NeighboorHood.Commands.Update
         }
         public async Task<BaseResponse> Handle(UpdateNeighboorHoodCommandRequest request, CancellationToken cancellationToken)
         {
-            bool result = await _neighboorHoodReadRepository.AnyAsync(data => data.Id == request.Id, false);
+            bool result = await _neighboorHoodReadRepository.AnyAsync(data => data.Id == request.NeighboorHoodDto.Id, false);
             if (result) {
                 Domain.Entities.NeighboorHood neighboorHood = new()
                 {
 
-                    Name = request.Name,
+                    Name = request.NeighboorHoodDto.Name,
 
                 };
                 _neighboorHoodWriteRepository.Update(neighboorHood);

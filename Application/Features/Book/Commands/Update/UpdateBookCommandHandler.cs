@@ -24,17 +24,18 @@ namespace Application.Features.Book.Commands.Update
         }
         public async Task<BaseResponse> Handle(UpdateBookCommandRequest request, CancellationToken cancellationToken)
         {
-            bool result =  await _bookReadRepository.AnyAsync(data => data.Id == request.Id,false);
+            bool result =  await _bookReadRepository.AnyAsync(data => data.Id == request.BookDto.Id,false);
 
             if (result)
             {
                 Domain.Entities.Book book = new()
                 {
-                    AuthorId = request.AuthorId,
-                    LanguageId = request.LanguageId,
-                    Name = request.Name,
-                    PageOfNumber = request.PageOfNumber,
-                    CatalogId = request.CatalogId,
+                    AuthorId = request.BookDto.AuthorId,
+                    LanguageId = request.BookDto.LanguageId,
+                    Name = request.BookDto.Name,
+                    PageOfNumber = request.BookDto.PageOfNumber,
+                    CatalogId = request.BookDto.CatalogId,
+                    
                     
 
                 };

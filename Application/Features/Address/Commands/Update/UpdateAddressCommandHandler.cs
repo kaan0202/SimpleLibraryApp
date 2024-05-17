@@ -24,18 +24,18 @@ namespace Application.Features.Address.Commands.Update
         }
         async Task<BaseResponse> IRequestHandler<UpdateAddressCommandRequest, BaseResponse>.Handle(UpdateAddressCommandRequest request, CancellationToken cancellationToken)
         {
-            bool result = await _addressReadRepository.AnyAsync(data => data.Id == request.Id,false);
+            bool result = await _addressReadRepository.AnyAsync(data => data.Id == request.Address.Id,false);
             if (result == true)
             {
                 Domain.Entities.Address address = new()
                 {
-                    AddressTitle = request.AddressTitle,
-                    NeighboorHoodId = request.NeighboorHoodId,
-                    OpenAddress = request.OpenAddress,
-                    Description = request.Description,
-                    PhoneNumber = request.PhoneNumber,
-                    PersonId = request.PersonId,
-                    
+                    Id = request.Address.Id,
+                    AddressTitle = request.Address.AddressTitle,
+                    CreatedDate = DateTime.UtcNow,
+                    Description = request.Address.Description,
+                    NeighboorHoodId = request.Address.NeighboorHoodId,
+                    PhoneNumber = request.Address.PhoneNumber,
+                    PersonId = request.Address.PersonId,
                 };
 
                 _addressWriteRepository.Update(address);
