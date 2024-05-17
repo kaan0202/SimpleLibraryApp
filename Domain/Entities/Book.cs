@@ -15,7 +15,7 @@ namespace Domain.Entities
       
         public int? CatalogId { get; set; }
         public string Name { get; set; }
-        public int AuthorId { get; set; }
+        public int? AuthorId { get; set; }
         public int PageOfNumber { get; set; }
         public DateTime? DeletedDate { get; set; }
 

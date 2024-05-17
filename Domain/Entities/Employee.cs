@@ -12,7 +12,7 @@ namespace Domain.Entities
         public string Name { get; set; }
         public string Surname { get; set; }
         public int Salary { get; set; }
-        public bool Status { get; set; }
+        public bool? Status { get; set; }
         public string Gender { get; set; }
 
     }
