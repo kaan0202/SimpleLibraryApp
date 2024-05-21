@@ -33,15 +33,15 @@ namespace API.Controllers
             => await NoDataResponse(request);
 
         [HttpGet]
-        public async void GetAllAddresses(GetAllAddressQueryRequest request)
+        public async Task<IActionResult> GetAllAddresses(GetAllAddressQueryRequest request)
             => await DataResponse(request);
 
         [HttpGet("GetById")]
-        public async void GetByIdAddress([FromQuery]GetByIdAddressQueryRequest request)
+        public async Task<IActionResult> GetByIdAddress([FromQuery]GetByIdAddressQueryRequest request)
             => await DataResponse(request);
 
         [HttpGet("GetSingleOrDefault")] 
-        public async void GetSingleOrDefaultAddress([FromQuery]GetSingleAddressQueryRequest request)
+        public async Task<IActionResult> GetSingleOrDefaultAddress([FromQuery]GetSingleAddressQueryRequest request)
             => await DataResponse(request);
     }
 }

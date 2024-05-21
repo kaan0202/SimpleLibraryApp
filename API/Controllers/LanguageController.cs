@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    [Authorize(AuthenticationSchemes = "Admin")]
+    
     public class LanguageController : BaseController
     {
         public LanguageController(IMediator mediator) : base(mediator)
@@ -19,22 +19,19 @@ namespace API.Controllers
 
         [HttpPost]
         public async void AddLanguage([FromBody] AddLanguageCommandRequest request)
-            => await NoDataResponse(request);
+             => await NoDataResponse(request);
 
         [HttpPut]
-        public async void UpdateLanguage([FromQuery] UpdateLanguageCommandRequest request)
+        public async void UpdateLanguage([FromBody] UpdateLanguageCommandRequest request)
             => await NoDataResponse(request);
 
-        
-
         [HttpGet]
-        public async void GetAllLanguages(GetAllLanguageQueryRequest request)
+        public async Task<IActionResult> GetAllLanguages([FromQuery] GetAllLanguageQueryRequest request)
             => await DataResponse(request);
 
         [HttpGet("GetById")]
-        public async void GetByIdLanguage([FromQuery] GetByIdLanguageQueryRequest request)
+        public async Task<IActionResult> GetByIdLanguage([FromQuery] GetByIdLanguageQueryRequest request)
            => await DataResponse(request);
 
-        
     }
 }

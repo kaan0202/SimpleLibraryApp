@@ -25,14 +25,15 @@ namespace API.Controllers.Common
             return Ok(response);
         }
         [NonAction]
-        public async Task<IActionResult> DataResponse<T>(IRequest<BaseDataResponse<T>> request) where T : class,new()
+        public async Task<IActionResult> DataResponse<TResponseParameters>(IRequest<BaseDataResponse<TResponseParameters>> request)
+           where TResponseParameters : class, new()
         {
-            BaseDataResponse<T> response = await _mediator.Send(request);
-            
-            if(!response.Success)
-                return BadRequest(response.Message);
+            var response = await _mediator.Send(request);
+
+            if (!response.Success)
+                return BadRequest(response);
 
             return Ok(response);
-        } 
+        }
     }
 }

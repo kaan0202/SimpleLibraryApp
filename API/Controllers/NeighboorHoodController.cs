@@ -21,27 +21,27 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async void AddAuthor([FromBody] AddNeighboorHoodCommandRequest request)
+        public async void AddNeighboorHood([FromBody] AddNeighboorHoodCommandRequest request)
             => await NoDataResponse(request);
 
         [HttpPut]
-        public async void UpdateAuthor([FromQuery] UpdateNeighboorHoodCommandRequest request)
+        public async void UpdateNeighboorHood([FromQuery] UpdateNeighboorHoodCommandRequest request)
             => await NoDataResponse(request);
 
         [HttpDelete]
-        public async void DeleteAuthor([FromQuery] DeleteNeighboorHoodCommandRequest request)
+        public async void DeleteNeighboorHood([FromQuery] DeleteNeighboorHoodCommandRequest request)
             => await NoDataResponse(request);
 
         [HttpGet]
-        public async void GetAllAuthors(GetAllNeighboorHoodQueryRequest request)
+        public async Task<IActionResult> GetAllNeighboorHood(GetAllNeighboorHoodQueryRequest request)
             => await DataResponse(request);
 
         [HttpGet("GetById")]
-        public async void GetByIdAuthor([FromQuery] GetByIdNeighboorHoodQueryRequest request)
+        public async Task<IActionResult> GetByIdNeighboorHood([FromQuery] GetByIdNeighboorHoodQueryRequest request)
            => await DataResponse(request);
 
         [HttpGet("GetSingleOrDefault")]
-        public async void GetSingleOrDefaultAuthor([FromQuery] GetSingleNeighboorHoodQueryRequest request)
+        public async Task<IActionResult> GetSingleOrDefaultNeighboorHood([FromQuery] GetSingleNeighboorHoodQueryRequest request)
             => await DataResponse(request);
     }
 }

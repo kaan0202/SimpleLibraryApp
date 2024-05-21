@@ -19,25 +19,25 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async void AddAuthor([FromBody] AddPersonCommandRequest request)
+        public async void AddPerson([FromBody] AddPersonCommandRequest request)
             => await NoDataResponse(request);
 
         [HttpPut]
-        public async void UpdateAuthor([FromQuery] UpdatePersonCommandRequest request)
+        public async void UpdatePerson([FromQuery] UpdatePersonCommandRequest request)
             => await NoDataResponse(request);
 
         
 
         [HttpGet]
-        public async void GetAllAuthors(GetAllPersonQueryRequest request)
+        public async Task<IActionResult> GetAllPerson(GetAllPersonQueryRequest request)
             => await DataResponse(request);
 
         [HttpGet("GetById")]
-        public async void GetByIdAuthor([FromQuery] GetByIdPersonQueryRequest request)
+        public async Task<IActionResult> GetByIdPerson([FromQuery] GetByIdPersonQueryRequest request)
            => await DataResponse(request);
 
         [HttpGet("GetSingleOrDefault")]
-        public async void GetSingleOrDefaultAuthor([FromQuery] GetSinglePersonQueryRequest request)
+        public async Task<IActionResult> GetSingleOrDefaultPerson([FromQuery] GetSinglePersonQueryRequest request)
             => await DataResponse(request);
     }
 }

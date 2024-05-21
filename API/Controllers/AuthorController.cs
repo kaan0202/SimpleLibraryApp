@@ -36,15 +36,15 @@ namespace API.Controllers
             => await NoDataResponse(request);
 
         [HttpGet]
-         public async void GetAllAuthors(GetAllAuthorQueryRequest request)
+         public async Task<IActionResult> GetAllAuthors(GetAllAuthorQueryRequest request)
             => await DataResponse(request);
 
         [HttpGet("GetById")]
-        public async void GetByIdAuthor([FromQuery] GetByIdAuthorQueryRequest request)
+        public async Task<IActionResult> GetByIdAuthor([FromQuery] GetByIdAuthorQueryRequest request)
            => await DataResponse(request);
 
         [HttpGet("GetSingleOrDefault")]
-        public async void GetSingleOrDefaultAuthor([FromQuery] GetSingleAuthorQueryRequest request)
+        public async Task<IActionResult> GetSingleOrDefaultAuthor([FromQuery] GetSingleAuthorQueryRequest request)
             => await DataResponse(request);
 
 
@@ -57,7 +57,7 @@ namespace API.Controllers
             => await NoDataResponse(request);
 
         [HttpGet("[action]")]
-        public async void GetAuthorImages([FromQuery] GetAuthorImageFileRequest request)
+        public async Task<IActionResult> GetAuthorImages([FromQuery] GetAuthorImageFileRequest request)
             => await DataResponse(request);
     }
 }

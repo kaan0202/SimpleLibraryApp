@@ -29,15 +29,15 @@ namespace API.Controllers
         
 
         [HttpGet]
-        public async void GetAllCatalogs(GetAllCatalogQueryRequest request)
+        public async Task<IActionResult> GetAllCatalogs(GetAllCatalogQueryRequest request)
             => await DataResponse(request);
 
         [HttpGet("GetById")]
-        public async void GetByIdCatalog([FromQuery] GetByIdCatalogQueryRequest request)
+        public async Task<IActionResult> GetByIdCatalog([FromQuery] GetByIdCatalogQueryRequest request)
            => await DataResponse(request);
 
         [HttpGet("GetSingleOrDefault")]
-        public async void GetSingleOrDefaultCatalog([FromQuery] GetSingleCatalogQueryRequest request)
+        public async Task<IActionResult> GetSingleOrDefaultCatalog([FromQuery] GetSingleCatalogQueryRequest request)
             => await DataResponse(request);
     }
 }

@@ -28,11 +28,11 @@ namespace API.Controllers
       
 
         [HttpGet("GetById")]
-        public async void GetByIdBasket([FromQuery] GetByIdBasketQueryRequest request)
+        public async Task<IActionResult> GetByIdBasket([FromQuery] GetByIdBasketQueryRequest request)
            => await DataResponse(request);
 
         [HttpGet("GetSingleOrDefault")]
-        public async void GetSingleOrDefaultBasket([FromQuery] GetSingleBasketQueryRequest request)
+        public async Task<IActionResult> GetSingleOrDefaultBasket([FromQuery] GetSingleBasketQueryRequest request)
             => await DataResponse(request);
     }
 }

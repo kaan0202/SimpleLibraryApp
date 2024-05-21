@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    [Authorize(AuthenticationSchemes = "Admin")]
+    
     public class BookController : BaseController
     {
         public BookController(IMediator mediator) : base(mediator)
@@ -34,15 +34,15 @@ namespace API.Controllers
       
 
         [HttpGet]
-        public async void GetAllAuthors(GetAllBookQueryRequest request)
+        public async Task<IActionResult> GetAllBooks([FromQuery]GetAllBookQueryRequest request)
             => await DataResponse(request);
 
         [HttpGet("GetById")]
-        public async void GetByIdBook([FromQuery] GetByIdBookQueryRequest request)
+        public async Task<IActionResult> GetByIdBook([FromQuery] GetByIdBookQueryRequest request)
            => await DataResponse(request);
 
         [HttpGet("GetSingleOrDefault")]
-        public async void GetSingleOrDefaultBook([FromQuery] GetSingleBookQueryRequest request)
+        public async Task<IActionResult> GetSingleOrDefaultBook([FromQuery] GetSingleBookQueryRequest request)
             => await DataResponse(request);
 
         [HttpPost("[action]")]
@@ -55,7 +55,7 @@ namespace API.Controllers
 
 
         [HttpGet("[action]")]
-        public async void GetBookImages(GetBookImageFileRequest request)
+        public async Task<IActionResult> GetBookImages(GetBookImageFileRequest request)
             => await DataResponse(request); 
 
     }

@@ -25,23 +25,23 @@ namespace API.Controllers
             => await NoDataResponse(request);
 
         [HttpPut]
-        public async void UpdateAuthor([FromQuery] UpdateEmployeeCommandRequest request)
+        public async void UpdateEmployee([FromQuery] UpdateEmployeeCommandRequest request)
             => await NoDataResponse(request);
 
         [HttpDelete]
-        public async void DeleteAuthor([FromQuery] DeleteEmployeeCommandRequest request)
+        public async void DeleteEmployee([FromQuery] DeleteEmployeeCommandRequest request)
             => await NoDataResponse(request);
 
         [HttpGet]
-        public async void GetAllAuthors(GetAllEmployeeQueryRequest request)
+        public async Task<IActionResult> GetAllEmployees(GetAllEmployeeQueryRequest request)
             => await DataResponse(request);
 
         [HttpGet("GetById")]
-        public async void GetByIdAuthor([FromQuery] GetByIdEmployeeQueryRequest request)
+        public async Task<IActionResult> GetByIdEmployee([FromQuery] GetByIdEmployeeQueryRequest request)
            => await DataResponse(request);
 
         [HttpGet("GetSingleOrDefault")]
-        public async void GetSingleOrDefaultAuthor([FromQuery] GetSingleEmployeeQueryRequest request)
+        public async Task<IActionResult> GetSingleOrDefaultEmployee([FromQuery] GetSingleEmployeeQueryRequest request)
             => await DataResponse(request);
     }
 }
