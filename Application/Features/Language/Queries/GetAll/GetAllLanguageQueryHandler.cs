@@ -23,16 +23,20 @@ namespace Application.Features.Language.Queries.GetAll
 
         public async Task<BaseDataResponse<List<QueryLanguageDto>>> Handle(GetAllLanguageQueryRequest request, CancellationToken cancellationToken)
         {
-            var languages = await _languageReadRepository.GetAll().ToListAsync();
+
+            var totalCount = _languageReadRepository.GetAll(false).Count();
+            var languages = await _languageReadRepository.GetAll(false).Skip(request.Page * request.Size).Take(request.Size).ToListAsync();
             List<QueryLanguageDto> queryLanguageDtos = new();
             foreach (var language in languages)
             {
                 QueryLanguageDto queryLanguageDto = new();
                 queryLanguageDto.Name = language.Name;
                 queryLanguageDto.Id = language.Id;
+
                 queryLanguageDtos.Add(queryLanguageDto);
             }
-            return new SuccessDataResponse<List<QueryLanguageDto>>(queryLanguageDtos);
+
+            return new SuccessDataResponse<List<QueryLanguageDto>> (queryLanguageDtos,totalCount);
             
         }
         

@@ -11,5 +11,7 @@ namespace Application.Features.Language.Queries.GetAll
 {
     public class GetAllLanguageQueryRequest:IRequest<BaseDataResponse<List<QueryLanguageDto>>>   
     {
+        public int Page { get; set; } = 0;
+        public int Size { get; set; } = 5;
     }
 }
