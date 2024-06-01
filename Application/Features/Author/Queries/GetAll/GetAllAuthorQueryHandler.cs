@@ -21,27 +21,26 @@ namespace Application.Features.Author.Queries.GetAll
         }
        public async Task<BaseDataResponse<List<QueryAuthorDto>>> Handle(GetAllAuthorQueryRequest request, CancellationToken cancellationToken)
         {
-            bool result = await _authorReadRepository.AnyAsync(data => data.Id == request.Id,false);
-            if (result) 
-            {
-                var authors = await _authorReadRepository.GetAll(false).ToListAsync();
 
-                List<QueryAuthorDto> authorDtos = new();
-                foreach (var author in authors)
-                {
-                    QueryAuthorDto authorDto = new();
-                    authorDto.Id = author.Id;
-                    authorDto.Name = author.Name;
-                    authorDto.BirthDay = author.BirthDay;
-                    authorDto.Surname = author.Surname;
-                    
-                    
-                    
-                    authorDtos.Add(authorDto);
-                }
-                return new SuccessDataResponse<List<QueryAuthorDto>>(authorDtos);
+            var totalCount = _authorReadRepository.GetAll(false).Count();
+            var authors = await _authorReadRepository.GetAll(false).Skip(request.Page * request.Size).Take(request.Size).ToListAsync();
+            List<QueryAuthorDto> queryAuthorDtos = new();
+            foreach (var author in authors)
+            {
+                QueryAuthorDto queryAuthorDto = new();
+                queryAuthorDto.Surname = author.Surname;
+                queryAuthorDto.Id = author.Id;
+                queryAuthorDto.Name = author.Name;
+                queryAuthorDto.BirthDay = author.BirthDay;
+               
+
+
+                queryAuthorDtos.Add(queryAuthorDto);
             }
-            throw new Exception("Hata");
+
+            return new SuccessDataResponse<List<QueryAuthorDto>>(queryAuthorDtos, totalCount);
+        }
+           
         }
     }
-}
+

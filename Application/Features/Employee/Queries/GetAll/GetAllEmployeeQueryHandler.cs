@@ -24,7 +24,8 @@ namespace Application.Features.Employee.Queries.GetAll
 
         public async Task<BaseDataResponse<List<QueryEmployeeDto>>> Handle(GetAllEmployeeQueryRequest request, CancellationToken cancellationToken)
         {
-            var employees = await _employeeReadRepository.GetAll(false).ToListAsync();
+            var totalCount = _employeeReadRepository.GetAll(false).Count();
+            var employees = await _employeeReadRepository.GetAll(false).Skip(request.Page * request.Size).Take(request.Size).ToListAsync();
             List<QueryEmployeeDto> queryEmployeeDtos = new();
             foreach (var employee in employees)
             {
@@ -37,7 +38,7 @@ namespace Application.Features.Employee.Queries.GetAll
                 queryEmployeeDto.Id = employee.Id;
                 queryEmployeeDtos.Add(queryEmployeeDto);
             }
-            return new SuccessDataResponse<List<QueryEmployeeDto>>(queryEmployeeDtos);
+            return new SuccessDataResponse<List<QueryEmployeeDto>>(queryEmployeeDtos, totalCount);
            
         }
         

@@ -11,5 +11,7 @@ namespace Application.Features.Book.Queries.GetAll
 {
     public class GetAllBookQueryRequest:IRequest<BaseDataResponse<List<QueryBookDto>>>
     {
+        public int Page { get; set; } = 0;
+        public int Size { get; set; } = 5;
     }
 }

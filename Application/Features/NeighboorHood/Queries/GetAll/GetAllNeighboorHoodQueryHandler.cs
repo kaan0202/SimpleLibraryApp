@@ -23,7 +23,8 @@ namespace Application.Features.NeighboorHood.Queries.GetAll
 
       public  async Task<BaseDataResponse<List<QueryNeighboorHoodDto>>> Handle(GetAllNeighboorHoodQueryRequest request, CancellationToken cancellationToken)
         {
-            var neighboorHoods = await _repository.GetAll().ToListAsync();
+            var totalCount = _repository.GetAll(false).Count();
+            var neighboorHoods = await _repository.GetAll(false).Skip(request.Page * request.Size).Take(request.Size).ToListAsync();
             List<QueryNeighboorHoodDto> queryNeighboorHoodDtos = new();
             foreach (var item in neighboorHoods)
             {
@@ -32,7 +33,7 @@ namespace Application.Features.NeighboorHood.Queries.GetAll
                 queryNeighboorHoodDto.Name = item.Name;
                 queryNeighboorHoodDtos.Add(queryNeighboorHoodDto);
             }
-            return new SuccessDataResponse<List<QueryNeighboorHoodDto>>(queryNeighboorHoodDtos);
+            return new SuccessDataResponse<List<QueryNeighboorHoodDto>>(queryNeighboorHoodDtos,totalCount);
             
         }
     }

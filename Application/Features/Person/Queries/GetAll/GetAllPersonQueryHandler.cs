@@ -23,7 +23,8 @@ namespace Application.Features.Person.Queries.GetAll
 
         public async Task<BaseDataResponse<List<QueryPersonDto>>> Handle(GetAllPersonQueryRequest request, CancellationToken cancellationToken)
         {
-            var persons = await _personReadRepository.GetAll().ToListAsync();
+            var totalCount = _personReadRepository.GetAll(false).Count();
+            var persons = await _personReadRepository.GetAll(false).Skip(request.Page * request.Size).Take(request.Size).ToListAsync();
             List<QueryPersonDto> personDtos = new();
             foreach (var person in persons)
             {
@@ -48,7 +49,7 @@ namespace Application.Features.Person.Queries.GetAll
                 personDtos.Add(queryPersonDto);
                 
             }
-            return new SuccessDataResponse<List<QueryPersonDto>>(personDtos);
+            return new SuccessDataResponse<List<QueryPersonDto>>(personDtos,totalCount);
 
 
         }

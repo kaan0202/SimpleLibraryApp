@@ -21,7 +21,8 @@ namespace Application.Features.Catalog.Queries.GetAll
         }
         public async Task<BaseDataResponse<List<QueryCatalogDto>>> Handle(GetAllCatalogQueryRequest request, CancellationToken cancellationToken)
         {
-            var catalogs = await  _readRepository.GetAll(false).ToListAsync();
+            var totalCount = _readRepository.GetAll(false).Count();
+            var catalogs = await  _readRepository.GetAll(false).Skip(request.Page * request.Size).Take(request.Size).ToListAsync();
             List<QueryCatalogDto> queryCatalogDtos = new();
             foreach (var catalog in catalogs)
             {
@@ -30,7 +31,7 @@ namespace Application.Features.Catalog.Queries.GetAll
                 queryCatalogDto.Id = catalog.Id;
                 queryCatalogDtos.Add(queryCatalogDto);
             }
-            return new SuccessDataResponse<List<QueryCatalogDto>>(queryCatalogDtos);
+            return new SuccessDataResponse<List<QueryCatalogDto>>(queryCatalogDtos,totalCount);
             
         }
     }

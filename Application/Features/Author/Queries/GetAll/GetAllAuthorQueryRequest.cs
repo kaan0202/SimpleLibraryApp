@@ -11,6 +11,7 @@ namespace Application.Features.Author.Queries.GetAll
 {
     public class GetAllAuthorQueryRequest:IRequest<BaseDataResponse<List<QueryAuthorDto>>>
     {
-        public int Id { get; set; }
+        public int Page { get; set; } = 0;
+        public int Size { get; set; } = 5;
     }
 }

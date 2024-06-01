@@ -21,37 +21,23 @@ namespace Application.Features.Address.Queries.GetAll
         }
         public async Task<BaseDataResponse<List<QueryAddressDto>>> Handle(GetAllAddressQueryRequest request, CancellationToken cancellationToken)
         {
-
-            var addresses = await _addressReadRepository.Table.Include(x => x.Person).Include(x => x.NeighboorHood).AsNoTrackingWithIdentityResolution().ToListAsync();
-            List<QueryAddressDto> addressDtos = new();
+            var totalCount = _addressReadRepository.GetAll(false).Count();
+            var addresses = await _addressReadRepository.GetAll(false).Skip(request.Page * request.Size).Take(request.Size).ToListAsync();
+            List<QueryAddressDto> queryLanguageDtos = new();
             foreach (var address in addresses)
             {
-                QueryAddressDto addressDto = new();
-                addressDto.Id = address.Id;
-                addressDto.PhoneNumber = address.PhoneNumber;
-                addressDto.OpenAddress = address.OpenAddress;
-                addressDto.AddressTitle = address.AddressTitle;
-                addressDto.Description = address.Description;
-                addressDto.Person = new()
-                {
-                    Email = address.Person.Email,
-                    Name = address.Person.Name,
-                    Password = address.Person.Password,
-                    Surname = address.Person.Surname,
-                };
-                addressDto.NeighboorHood = new()
-                {
-                    Id = address.NeighboorHoodId,
-                    Name = address.NeighboorHood.Name,
+                QueryAddressDto queryAddressDto = new();
+                queryAddressDto.AddressTitle = address.AddressTitle;
+                queryAddressDto.Id = address.Id;
+                queryAddressDto.PhoneNumber = address.PhoneNumber;
+                queryAddressDto.OpenAddress = address.OpenAddress;
+                queryAddressDto.Description = address.Description;
+                
 
-                };
-
-
-
-
-                addressDtos.Add(addressDto);
+                queryLanguageDtos.Add(queryAddressDto);
             }
-            return new SuccessDataResponse<List<QueryAddressDto>>(addressDtos);
+
+            return new SuccessDataResponse<List<QueryAddressDto>>(queryLanguageDtos, totalCount);
         }
 
         

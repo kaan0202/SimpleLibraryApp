@@ -11,6 +11,7 @@ namespace Application.Features.Address.Queries.GetAll
 {
     public class GetAllAddressQueryRequest:IRequest<BaseDataResponse<List<QueryAddressDto>>>
     {
-      
+        public int Page { get; set; } = 0;
+        public int Size { get; set; } = 5;
     }
 }

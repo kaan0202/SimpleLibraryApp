@@ -11,6 +11,7 @@ namespace Application.Features.Employee.Queries.GetAll
 {
     public class GetAllEmployeeQueryRequest:IRequest<BaseDataResponse<List<QueryEmployeeDto>>>
     {
-
+        public int Page { get; set; } = 0;
+        public int Size { get; set; } = 5;
     }
 }

@@ -22,7 +22,8 @@ namespace Application.Features.Book.Queries.GetAll
 
         public async Task<BaseDataResponse<List<QueryBookDto>>> Handle(GetAllBookQueryRequest request, CancellationToken cancellationToken)
         {
-            var books =  await _bookReadRepository.Table.Include(x => x.Author).Include(x => x.Catalog).Include(x => x.Language).ToListAsync();
+            var totalCount = _bookReadRepository.GetAll(false).Count();
+            var books =  await _bookReadRepository.Table.Include(x => x.Author).Include(x => x.Catalog).Include(x => x.Language).Skip(request.Page * request.Size).Take(request.Size).AsNoTrackingWithIdentityResolution().ToListAsync();
 
             List<QueryBookDto> queryBookDtos = new();
             foreach (var book in books)
@@ -55,7 +56,7 @@ namespace Application.Features.Book.Queries.GetAll
 
             }
 
-           return new SuccessDataResponse<List<QueryBookDto>>(queryBookDtos);
+           return new SuccessDataResponse<List<QueryBookDto>>(queryBookDtos,totalCount);
 
 
 
