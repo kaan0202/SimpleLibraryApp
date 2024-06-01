@@ -11,13 +11,22 @@ namespace Domain.Results.Common
     {
         public BaseDataResponse(T data,string message, bool success) : base(message, success)
         {
-            this.Data = data;
-        }
-        public BaseDataResponse(T data,bool success):base(success)
-        {
             Data = data;
         }
+        public BaseDataResponse(T data,bool success, int? totalCount) : base(success)
+        {
+            Data = data;
+            TotalCount = totalCount;
 
-        public T Data { get; set; }
+        }
+        public BaseDataResponse(T data, bool success) : base(success)
+        {
+            Data = data;
+          
+
+        }
+
+        public T Data { get; }
+        public int? TotalCount { get; }
     }
 }

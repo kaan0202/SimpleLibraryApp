@@ -12,7 +12,10 @@ namespace Domain.Results
         public ErrorDataResponse( string message) : base(default, message, false)
         {
         }
-        public ErrorDataResponse():base(default,false)
+        public ErrorDataResponse():base(default,false,0)
+        {
+        }
+        public ErrorDataResponse(T data, int? totalCount) : base(data, false, totalCount)
         {
         }
     }
