@@ -1,5 +1,6 @@
 using API.Extensions;
 using Application;
+using Domain.Entities.Identity;
 using Infrasracture.Services.Storage.Local;
 using Infrastracture;
 using Infrastracture.Filter;
@@ -78,6 +79,7 @@ app.Use(async (context, next) =>
     await next();
 
 });
+app.UseCors();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseSerilogRequestLogging();

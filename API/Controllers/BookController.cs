@@ -24,11 +24,11 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async void AddBook([FromBody] AddBookCommandRequest request)
+        public async Task<IActionResult> AddBook([FromBody] AddBookCommandRequest request)
             => await NoDataResponse(request);
 
         [HttpPut]
-        public async void UpdateBook([FromQuery] UpdateBookCommandRequest request)
+        public async Task<IActionResult> UpdateBook([FromQuery] UpdateBookCommandRequest request)
             => await NoDataResponse(request);
 
       
@@ -46,7 +46,7 @@ namespace API.Controllers
             => await DataResponse(request);
 
         [HttpPost("[action]")]
-        public async void Upload([FromQuery] UploadBookImageFileCommandRequest request)
+        public async Task<IActionResult> Upload([FromQuery] UploadBookImageFileCommandRequest request)
         => await NoDataResponse(request);
 
         [HttpDelete("[action]")]

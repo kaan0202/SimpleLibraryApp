@@ -21,15 +21,15 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async void AddEmployee([FromBody] AddEmployeeCommandRequest request)
+        public async Task<IActionResult> AddEmployee([FromBody] AddEmployeeCommandRequest request)
             => await NoDataResponse(request);
 
         [HttpPut]
-        public async void UpdateEmployee([FromQuery] UpdateEmployeeCommandRequest request)
+        public async Task<IActionResult> UpdateEmployee([FromQuery] UpdateEmployeeCommandRequest request)
             => await NoDataResponse(request);
 
         [HttpDelete]
-        public async void DeleteEmployee([FromQuery] DeleteEmployeeCommandRequest request)
+        public async Task<IActionResult> DeleteEmployee([FromQuery] DeleteEmployeeCommandRequest request)
             => await NoDataResponse(request);
 
         [HttpGet]

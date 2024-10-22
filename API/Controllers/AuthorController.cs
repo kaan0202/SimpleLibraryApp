@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    [Authorize(AuthenticationSchemes = "Admin")]
+    
     public class AuthorController : BaseController
     {
         public AuthorController(IMediator mediator) : base(mediator)
@@ -24,15 +24,15 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async void AddAuthor([FromBody]AddAuthorCommandRequest request)
+        public async Task<IActionResult> AddAuthor([FromBody]AddAuthorCommandRequest request)
             => await NoDataResponse(request);
 
         [HttpPut]
-        public async void UpdateAuthor([FromQuery] UpdateAuthorCommandRequest request)
+        public async Task<IActionResult> UpdateAuthor([FromQuery] UpdateAuthorCommandRequest request)
             => await NoDataResponse(request);
 
         [HttpDelete]
-        public async void DeleteAuthor([FromQuery] DeleteAuthorCommandRequest request)
+        public async Task<IActionResult> DeleteAuthor([FromQuery] DeleteAuthorCommandRequest request)
             => await NoDataResponse(request);
 
         [HttpGet]
@@ -49,11 +49,11 @@ namespace API.Controllers
 
 
         [HttpPost("[action]")]
-        public async void Upload([FromQuery] UploadAuthorImageFileCommandRequest request)
+        public async Task<IActionResult> Upload([FromQuery] UploadAuthorImageFileCommandRequest request)
          => await NoDataResponse(request);
 
         [HttpDelete("[action]")]
-        public async void RemoveAuthorImage([FromQuery] RemoveAuthorImageFileCommandRequest request)
+        public async Task<IActionResult> RemoveAuthorImage([FromQuery] RemoveAuthorImageFileCommandRequest request)
             => await NoDataResponse(request);
 
         [HttpGet("[action]")]

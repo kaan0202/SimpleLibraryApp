@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    [Authorize(AuthenticationSchemes = "Admin")]
+    
     public class NeighboorHoodController : BaseController
     {
         public NeighboorHoodController(IMediator mediator) : base(mediator)
@@ -21,15 +21,15 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async void AddNeighboorHood([FromBody] AddNeighboorHoodCommandRequest request)
+        public async Task<IActionResult> AddNeighboorHood([FromBody] AddNeighboorHoodCommandRequest request)
             => await NoDataResponse(request);
 
         [HttpPut]
-        public async void UpdateNeighboorHood([FromQuery] UpdateNeighboorHoodCommandRequest request)
+        public async Task<IActionResult> UpdateNeighboorHood([FromQuery] UpdateNeighboorHoodCommandRequest request)
             => await NoDataResponse(request);
 
         [HttpDelete]
-        public async void DeleteNeighboorHood([FromQuery] DeleteNeighboorHoodCommandRequest request)
+        public async Task<IActionResult> DeleteNeighboorHood([FromQuery] DeleteNeighboorHoodCommandRequest request)
             => await NoDataResponse(request);
 
         [HttpGet]

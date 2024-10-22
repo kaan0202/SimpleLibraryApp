@@ -25,10 +25,8 @@ namespace Application.Features.AppUser.LoginUser
 
         public async Task<BaseDataResponse<DTOs.TokenDto.Token>> Handle(LoginUserCommandRequest request, CancellationToken cancellationToken)
         {
-            Domain.Entities.Identity.AppUser? appUser = await _userManager.FindByNameAsync(request.UsernameOrEmail);
+            Domain.Entities.Identity.AppUser? appUser = await _userManager.FindByEmailAsync(request.Email);
 
-            if (appUser == null)
-                appUser = await _userManager.FindByEmailAsync(request.UsernameOrEmail);
 
             if (appUser == null)
                 throw new Exception("Hata");

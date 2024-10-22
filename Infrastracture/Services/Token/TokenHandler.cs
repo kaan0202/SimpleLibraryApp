@@ -45,9 +45,8 @@ namespace Infrastracture.Services.Token
                 issuer: _configuration["Token:Issuer"],
                 expires: token.Expiration,
                 notBefore: DateTime.UtcNow,
-                signingCredentials: signingCredentials,
-                claims: new List<Claim> { new(ClaimTypes.Name, appUser.UserName) }
-                );
+                signingCredentials: signingCredentials
+              );
 
             token.RefreshToken = CreateRefreshToken();
             //Token oluşturucu sınıfından bir örnek alalım.

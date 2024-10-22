@@ -1,4 +1,5 @@
-﻿using Application.UnitOfWork;
+﻿using Application.Abstraction.Services;
+using Application.UnitOfWork;
 using Domain.Results;
 using Domain.Results.Common;
 using MediatR;
@@ -13,33 +14,36 @@ namespace Application.Features.AppUser.CreateUser
 {
     public class CreateUserCommandHandler : IRequestHandler<CreateUserCommandRequest, BaseResponse>
     {
-        readonly UserManager<Domain.Entities.Identity.AppUser> _userManager;
+        readonly IUserService _userService;
         readonly IUnitOfWork _unitOfWork;
 
-        public CreateUserCommandHandler(UserManager<Domain.Entities.Identity.AppUser> userManager, IUnitOfWork unitOfWork)
+        public CreateUserCommandHandler(IUserService userService, IUnitOfWork unitOfWork)
         {
-            _userManager = userManager;
+            _userService = userService;
             _unitOfWork = unitOfWork;
         }
 
         public async Task<BaseResponse> Handle(CreateUserCommandRequest request, CancellationToken cancellationToken)
         {
-            IdentityResult result = await _userManager.CreateAsync(new()
+            var result = await _userService.CreateUser(new()
             {
-                Id = Guid.NewGuid().ToString(),
+              
                 Email = request.Email,
                 NameSurname = request.NameSurname,
                 UserName = request.Username,
-                
+                Password = request.Password,
+                PasswordConfirm = request.PasswordConfirm,
+
                 
 
-            },request.Password);
+            });
 
-            if (result.Succeeded)
+            if (result.Success)
             {
                 await _unitOfWork.SaveChangesAsync();
                 return new SuccessWithNoDataResponse("Kullanıcı oluşturuldu");
             }
+            
             throw new Exception("Hata");
         }
     }

@@ -1,5 +1,6 @@
 ﻿using API.Controllers.Common;
 using Application.Features.Language.Commands.Add;
+using Application.Features.Language.Commands.Delete;
 using Application.Features.Language.Commands.Update;
 using Application.Features.Language.Queries.GetAll;
 using Application.Features.Language.Queries.GetById;
@@ -18,13 +19,16 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async void AddLanguage([FromBody] AddLanguageCommandRequest request)
+        public async Task<IActionResult> AddLanguage([FromBody] AddLanguageCommandRequest request)
              => await NoDataResponse(request);
 
         [HttpPut]
-        public async void UpdateLanguage([FromBody] UpdateLanguageCommandRequest request)
+        public async Task<IActionResult> UpdateLanguage([FromBody] UpdateLanguageCommandRequest request)
             => await NoDataResponse(request);
 
+        [HttpDelete("{Id}")]
+        public async Task<IActionResult> DeleteLanguage([FromRoute] Request request)
+            => await NoDataResponse(request);
         [HttpGet]
         public async Task<IActionResult> GetAllLanguages([FromQuery] GetAllLanguageQueryRequest request)
             => await DataResponse(request);

@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    
+    [Authorize(AuthenticationSchemes ="Admin")]
     public class AddressController : BaseController
     {
         public AddressController(IMediator mediator) : base(mediator)
@@ -21,15 +21,15 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async void AddAddress([FromBody] AddAddressCommandRequest request)
+        public async Task<IActionResult> AddAddress([FromBody] AddAddressCommandRequest request)
             => await NoDataResponse(request);
 
         [HttpPut]
-        public async void UpdateAddress([FromQuery]UpdateAddressCommandRequest request)
+        public async Task<IActionResult> UpdateAddress([FromQuery]UpdateAddressCommandRequest request)
             => await NoDataResponse(request);
 
         [HttpDelete]
-        public async void DeleteAddress([FromQuery]DeleteAddressCommandRequest request)
+        public async Task<IActionResult> DeleteAddress([FromQuery]DeleteAddressCommandRequest request)
             => await NoDataResponse(request);
 
         [HttpGet]

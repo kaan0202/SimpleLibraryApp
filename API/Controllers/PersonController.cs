@@ -19,11 +19,11 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async void AddPerson([FromBody] AddPersonCommandRequest request)
+        public async Task<IActionResult> AddPerson([FromBody] AddPersonCommandRequest request)
             => await NoDataResponse(request);
 
         [HttpPut]
-        public async void UpdatePerson([FromQuery] UpdatePersonCommandRequest request)
+        public async Task<IActionResult> UpdatePerson([FromQuery] UpdatePersonCommandRequest request)
             => await NoDataResponse(request);
 
         

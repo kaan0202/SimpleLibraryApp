@@ -17,11 +17,11 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async void AddBasket([FromBody] AddBasketCommandRequest request)
+        public async Task<IActionResult> AddBasket([FromBody] AddBasketCommandRequest request)
             => await NoDataResponse(request);
 
         [HttpPut]
-        public async void UpdateBasket([FromQuery] UpdateBasketCommandRequest request)
+        public async Task<IActionResult> UpdateBasket([FromQuery] UpdateBasketCommandRequest request)
             => await NoDataResponse(request);
 
        

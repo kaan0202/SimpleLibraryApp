@@ -2,6 +2,7 @@
 using Application.Features.AppUser.CreateUser;
 using Application.Features.AppUser.GoogleLogin;
 using Application.Features.AppUser.LoginUser;
+using Application.Features.AppUser.RefreshTokenLogin;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,12 +18,12 @@ namespace API.Controllers
 
 
         [HttpPost]
-        public async void CreateUser([FromBody] CreateUserCommandRequest request)
+        public async Task<IActionResult> CreateUser([FromBody] CreateUserCommandRequest request)
             => await NoDataResponse(request);
 
         [HttpPost("[action]")]
-        public async Task<IActionResult> Login(LoginUserCommandRequest request)
-            => await NoDataResponse(request);
+        public async Task<IActionResult> Login([FromBody]LoginUserCommandRequest request)
+            => await DataResponse(request);
 
         [HttpPost("google-login")]
         public async Task<IActionResult> GoogleLogin(GoogleLoginCommandRequest request)
@@ -32,6 +33,8 @@ namespace API.Controllers
         public async Task<IActionResult> FacebookLogin(GoogleLoginCommandRequest request)
            => await DataResponse(request);
 
-
+        [HttpGet]
+        public async Task<IActionResult> RefreshTokenLogin([FromBody] Request request)
+            => await DataResponse(request);
     }
 }

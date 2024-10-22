@@ -8,6 +8,7 @@ namespace Application.DTOs.LanguageDto
 {
     public class CommandLanguageDto
     {
-        public string Name { get; set; }
+        public int Id { get; set; } 
+        public string? Name { get; set; }
     }
 }

@@ -20,7 +20,10 @@ namespace Persistance.EntityFramework.Contexts
             
         }
 
-
+        public LibraryDbContext()
+        {
+            
+        }
 
         public DbSet<Book> Books { get; set; }
         public DbSet<Address> Addresses { get; set; }
@@ -38,7 +41,7 @@ namespace Persistance.EntityFramework.Contexts
 
 
 
-
+       
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -54,7 +57,8 @@ namespace Persistance.EntityFramework.Contexts
                 _ = data.State switch
                 {
                     EntityState.Added => data.Entity.CreatedDate = DateTime.UtcNow,
-                    EntityState.Modified => data.Entity.UpdatedDate = DateTime.UtcNow
+                    EntityState.Modified => data.Entity.UpdatedDate = DateTime.UtcNow,
+                      _ => DateTime.Now
                 };
             }
           

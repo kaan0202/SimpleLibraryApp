@@ -17,6 +17,9 @@ namespace Infrastracture
         {
             services.AddScoped<IStorageService, StorageService>();
             services.AddScoped<ITokenHandler,TokenHandler>();
+
+
+
         }
 
         public static void AddStorageService<T>(this IServiceCollection services) where T : class,IStorage

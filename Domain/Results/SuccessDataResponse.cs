@@ -13,7 +13,7 @@ namespace Domain.Results
         {
         }
 
-        public SuccessDataResponse(T data,int? totalCount):base(data,true,totalCount)
+        public SuccessDataResponse(T data,int totalCount):base(data,true,totalCount)
         {
         }
         public SuccessDataResponse(T data) : base(data, true)

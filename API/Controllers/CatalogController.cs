@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    [Authorize(AuthenticationSchemes = "Admin")]
+    
     public class CatalogController : BaseController
     {
         public CatalogController(IMediator mediator) : base(mediator)
@@ -19,11 +19,11 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async void AddCatalog([FromBody] AddCatalogCommandRequest request)
+        public async Task<IActionResult> AddCatalog([FromBody] AddCatalogCommandRequest request)
             => await NoDataResponse(request);
 
         [HttpPut]
-        public async void UpdateCatalog([FromQuery] UpdateCatalogCommandRequest request)
+        public async Task<IActionResult> UpdateCatalog([FromQuery] UpdateCatalogCommandRequest request)
             => await NoDataResponse(request);
 
         
